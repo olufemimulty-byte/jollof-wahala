@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Guess the Naija food, place, slang or proverb letter by letter before the jollof pot burns.">
+<meta name="theme-color" content="#111733">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Jollof Wahala">
+<meta property="og:title" content="Jollof Wahala">
+<meta property="og:description" content="Guess the Naija word before the jollof pot burns.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111733'/%3E%3Cpath d='M32 54C18 50 20 36 27 30c0 7 4 8 5 7-2-9 3-17 9-21-1 9 7 15 7 24 0 9-7 14-16 14z' fill='%23e4532b'/%3E%3Cpath d='M32 54c-6-2-7-8-3-12 1 4 4 4 5 2 2 3 4 9-2 10z' fill='%23f4a83a'/%3E%3C/svg%3E">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}</style>
+<title>Jollof Wahala</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap">
+<style>
+/* Layout: adire-indigo night market; pot on the fire at left, word board + keyboard at right; stacks on phones. Single committed dark world. */
+:root {
+  color-scheme: dark;
+  --night: #111733;
+  --indigo: #1d2860;
+  --indigo-2: #2a3884;
+  --cloth: #f0e7d3;
+  --cloth-edge: #c8b78f;
+  --cloth-ink: #1a1f3d;
+  --jollof: #e4532b;
+  --palm: #f4a83a;
+  --leaf: #3cb47c;
+  --text: #f4efe4;
+  --muted: #a8b0d8;
+  --display: "Lilita One", "Arial Black", Impact, sans-serif;
+  --body: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+}
+html, body { height: 100%; }
+body {
+  background-color: var(--night);
+  background-image:
+    radial-gradient(circle at 20px 20px, rgba(120,140,230,.10) 0 5px, transparent 6px),
+    radial-gradient(circle at 60px 60px, rgba(120,140,230,.07) 0 2px, transparent 3px),
+    repeating-linear-gradient(45deg, rgba(120,140,230,.04) 0 2px, transparent 2px 40px),
+    repeating-linear-gradient(-45deg, rgba(120,140,230,.04) 0 2px, transparent 2px 40px);
+  background-size: 80px 80px, 80px 80px, auto, auto;
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.5;
+}
+.wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding-block: 20px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 18px;
+}
+header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px 24px; }
+h1 {
+  font-family: var(--display); font-weight: 400; margin: 0;
+  font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: .95; letter-spacing: .01em;
+  color: var(--palm);
+  text-shadow: 3px 3px 0 var(--jollof), 6px 6px 0 rgba(0,0,0,.35);
+}
+.tag { margin: 6px 0 0; color: var(--muted); font-size: .95rem; }
+.stats { display: flex; flex-wrap: wrap; gap: 8px; }
+.stat {
+  background: rgba(255,255,255,.05); border: 1px solid rgba(168,176,216,.18);
+  border-radius: 10px; padding: 6px 12px; min-width: 76px;
+}
+.stat b { display: block; font-family: var(--display); font-weight: 400; font-size: 1.35rem; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.stat span { font-size: .68rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+.voice { cursor: pointer; font: inherit; color: var(--text); text-align: left; }
+.voice:hover { border-color: var(--palm); }
+.voice[aria-pressed="false"] b { color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.chips .lbl { font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-right: 4px; }
+.chip {
+  font: 600 .88rem var(--body); color: var(--text); cursor: pointer;
+  background: transparent; border: 1.5px solid rgba(168,176,216,.35); border-radius: 999px; padding: 5px 13px;
+}
+.chip:hover { border-color: var(--palm); }
+.chip[aria-pressed="true"] { background: var(--palm); color: var(--cloth-ink); border-color: var(--palm); }
+
+.game { display: grid; grid-template-columns: minmax(250px, 330px) 1fr; gap: 18px; align-items: start; }
+@media (max-width: 760px) { .game { grid-template-columns: 1fr; } }
+
+.scene {
+  background: linear-gradient(180deg, var(--indigo) 0%, #151d48 100%);
+  border: 1px solid rgba(168,176,216,.18); border-radius: 18px;
+  padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 10px; align-items: center;
+}
+.scene svg { width: 100%; max-width: 300px; height: auto; display: block; }
+.heat { display: flex; align-items: center; gap: 10px; font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+.pips { display: flex; gap: 5px; }
+.pip { width: 18px; height: 10px; border-radius: 3px; background: rgba(168,176,216,.2); transition: background .25s; }
+.pip.on { background: var(--jollof); box-shadow: 0 0 8px rgba(228,83,43,.7); }
+.mama {
+  font: 700 .92rem var(--body); cursor: pointer; width: 100%;
+  background: transparent; color: var(--palm); border: 1.5px dashed var(--palm); border-radius: 10px; padding: 8px 12px;
+}
+.mama:hover:not(:disabled) { background: rgba(244,168,58,.1); }
+.mama:disabled { opacity: .4; cursor: not-allowed; }
+.mama small { display: block; font-weight: 400; color: var(--muted); font-size: .75rem; }
+
+.play {
+  background: rgba(17,23,51,.75); border: 1px solid rgba(168,176,216,.18); border-radius: 18px;
+  padding: 18px clamp(12px, 3vw, 26px) 20px; display: flex; flex-direction: column; gap: 16px; min-width: 0;
+}
+.cat { font-size: .74rem; text-transform: uppercase; letter-spacing: .14em; color: var(--palm); font-weight: 800; }
+.clue { margin: 2px 0 0; font-size: 1.05rem; color: var(--text); max-width: 60ch; }
+.board { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 22px; padding-block: 6px; min-height: 64px; }
+.word { display: flex; gap: 4px; }
+.tile {
+  width: clamp(24px, 5.6vw, 40px); height: clamp(34px, 7.6vw, 52px);
+  display: grid; place-items: center;
+  background: var(--cloth); color: var(--cloth-ink);
+  border-radius: 6px; border-bottom: 4px solid var(--cloth-edge);
+  font-family: var(--display); font-size: clamp(1.1rem, 3.6vw, 1.8rem);
+}
+.tile.show { animation: flip .35s ease-out; }
+.tile.missed { color: var(--jollof); }
+.tile.punct { background: transparent; border-color: transparent; color: var(--text); width: auto; min-width: 12px; }
+@keyframes flip { from { transform: rotateX(90deg); } to { transform: rotateX(0); } }
+
+.msg { min-height: 2.2em; text-align: center; font-family: var(--display); font-size: clamp(1.2rem, 3.5vw, 1.6rem); letter-spacing: .02em; }
+.msg.good { color: var(--leaf); } .msg.bad { color: var(--jollof); } .msg.big { color: var(--palm); }
+.msg small { display: block; font-family: var(--body); font-size: .85rem; color: var(--muted); letter-spacing: 0; }
+
+.keys { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+.row { display: flex; gap: 5px; justify-content: center; }
+.key {
+  width: clamp(27px, 8vw, 44px); height: 46px; cursor: pointer;
+  font: 400 1.15rem var(--display); color: var(--cloth-ink);
+  background: var(--cloth); border: none; border-bottom: 3px solid var(--cloth-edge); border-radius: 7px;
+  transition: transform .08s;
+}
+.key:hover:not(:disabled) { transform: translateY(-2px); }
+.key:active:not(:disabled) { transform: translateY(1px); }
+.key.hit { background: var(--leaf); border-color: #24805a; color: #fff; }
+.key.miss { background: rgba(168,176,216,.15); border-color: transparent; color: rgba(244,239,228,.35); text-decoration: line-through; }
+.key:disabled { cursor: default; }
+button:focus-visible { outline: 3px solid var(--palm); outline-offset: 2px; }
+
+.next {
+  align-self: center; font: 400 1.2rem var(--display); letter-spacing: .03em; cursor: pointer;
+  background: var(--jollof); color: #fff; border: none; border-radius: 12px; padding: 12px 28px;
+  border-bottom: 4px solid #a83417;
+}
+.next:hover { filter: brightness(1.08); }
+
+.how { color: var(--muted); font-size: .85rem; max-width: 70ch; margin: 0; }
+.how b { color: var(--text); font-weight: 600; }
+
+/* pot scene */
+.fire { transform-box: fill-box; transform-origin: 50% 100%; transition: transform .45s cubic-bezier(.3,1.6,.5,1); }
+.flicker { transform-box: fill-box; transform-origin: 50% 100%; animation: flick .5s ease-in-out infinite alternate; }
+@keyframes flick { from { transform: scale(1, 1); } to { transform: scale(.94, 1.07); } }
+.lid { transition: transform .5s cubic-bezier(.3,1.6,.5,1); transform-box: fill-box; transform-origin: 50% 100%; }
+.won .lid { transform: translate(18px, -26px) rotate(14deg); }
+.lost .lid { transform: translate(-22px, -40px) rotate(-24deg); }
+.smoke circle { transition: opacity .4s; }
+.drift { animation: drift 2.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.drift:nth-child(2) { animation-delay: .8s; } .drift:nth-child(3) { animation-delay: 1.6s; }
+@keyframes drift { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(6px,-8px) scale(1.12); } }
+.steam { opacity: 0; transition: opacity .4s; }
+.won .steam { opacity: 1; }
+.steam path { animation: rise 1.6s ease-in-out infinite; }
+.steam path:nth-child(2) { animation-delay: .5s; } .steam path:nth-child(3) { animation-delay: 1s; }
+@keyframes rise { 0% { transform: translateY(6px); opacity: 0; } 40% { opacity: .9; } 100% { transform: translateY(-14px); opacity: 0; } }
+.shake { animation: shake .35s; }
+@keyframes shake { 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
+.overlay {
+  position: fixed; inset: 0; z-index: 20; display: grid; place-items: center;
+  background: rgba(8,11,28,.78); padding: 16px;
+}
+.card {
+  background: var(--indigo); border: 1px solid rgba(168,176,216,.25); border-radius: 20px;
+  padding: 26px 24px; max-width: 420px; width: 100%; text-align: center; display: flex; flex-direction: column; gap: 12px;
+}
+.card h2 { font-family: var(--display); font-weight: 400; color: var(--palm); font-size: 2rem; margin: 0; line-height: 1.05; text-wrap: balance; }
+.card .final { font-family: var(--display); font-size: 3.4rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.card p { margin: 0; color: var(--muted); }
+.card ul { list-style: none; padding: 0; margin: 0; text-align: left; display: flex; flex-direction: column; gap: 4px; font-size: .9rem; }
+.card li { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px dashed rgba(168,176,216,.2); padding-bottom: 4px; }
+.card li .r-ok { color: var(--leaf); } .card li .r-no { color: var(--jollof); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Jollof Wahala</h1>
+      <p class="tag">Guess the Naija word before the pot burns. Five pots per party.</p>
+    </div>
+    <div class="stats" aria-label="Scoreboard">
+      <div class="stat"><b id="score">0</b><span>Score</span></div>
+      <div class="stat"><b id="round">1/5</b><span>Pot</span></div>
+      <div class="stat"><b id="streak">x1</b><span>Streak</span></div>
+      <div class="stat"><b id="best">0</b><span>Best</span></div>
+      <button class="stat voice" id="voice" type="button" aria-pressed="true" aria-label="Spoken reactions"><b>On</b><span>Voice</span></button>
+    </div>
+  </header>
+
+  <div class="chips" id="chips" role="group" aria-label="Category">
+    <span class="lbl">New party:</span>
+  </div>
+
+  <div class="game">
+    <section class="scene" aria-label="The pot">
+      <svg id="pot" viewBox="0 0 300 280" role="img" aria-label="Pot of jollof on a firewood stove">
+        <ellipse cx="150" cy="264" rx="122" ry="10" fill="#0a0f26"/>
+        <rect x="78" y="242" width="144" height="13" rx="6" fill="#6b3d22" transform="rotate(-7 150 248)"/>
+        <rect x="78" y="242" width="144" height="13" rx="6" fill="#80492a" transform="rotate(7 150 248)"/>
+        <g class="fire" id="fire">
+          <g class="flicker">
+            <path d="M150 252 C105 232 112 192 132 172 C130 197 142 202 146 198 C138 172 150 142 170 127 C166 157 190 172 192 202 C196 230 180 248 150 252Z" fill="#e4532b"/>
+            <path d="M150 252 C125 242 126 216 140 202 C142 216 150 218 152 214 C150 198 158 184 168 177 C168 197 180 212 178 230 C176 244 166 252 150 252Z" fill="#f4a83a"/>
+            <path d="M150 252 C138 248 136 234 144 224 C148 234 154 232 156 226 C162 234 164 246 150 252Z" fill="#ffe08a"/>
+          </g>
+        </g>
+        <rect x="58" y="196" width="40" height="58" rx="14" fill="#575c74"/>
+        <rect x="202" y="196" width="40" height="58" rx="14" fill="#4c5168"/>
+        <rect x="64" y="200" width="14" height="22" rx="6" fill="#6c7290"/>
+        <ellipse id="glow" cx="150" cy="200" rx="70" ry="10" fill="#e4532b" opacity="0"/>
+        <rect x="52" y="116" width="20" height="10" rx="5" fill="#2b2c38"/>
+        <rect x="228" y="116" width="20" height="10" rx="5" fill="#2b2c38"/>
+        <path id="potbody" d="M68 112 Q66 204 150 204 Q234 204 232 112 Z" fill="#33343f"/>
+        <path d="M84 126 Q86 180 120 192" stroke="rgba(255,255,255,.12)" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <ellipse cx="150" cy="112" rx="84" ry="14" fill="#41424f"/>
+        <ellipse id="food" cx="150" cy="112" rx="74" ry="9" fill="#e4532b"/>
+        <g class="lid">
+          <ellipse cx="150" cy="106" rx="80" ry="12" fill="#4a4c5e"/>
+          <ellipse cx="150" cy="103" rx="66" ry="8" fill="#555870"/>
+          <ellipse cx="150" cy="93" rx="13" ry="6" fill="#2b2c38"/>
+          <rect x="146" y="93" width="8" height="8" fill="#2b2c38"/>
+        </g>
+        <g class="steam" stroke="#f0e7d3" stroke-width="4" fill="none" stroke-linecap="round">
+          <path d="M120 82 q-8 -12 0 -24 q8 -12 0 -24"/>
+          <path d="M150 76 q-8 -12 0 -24 q8 -12 0 -24"/>
+          <path d="M180 82 q-8 -12 0 -24 q8 -12 0 -24"/>
+        </g>
+        <g class="smoke" id="smoke">
+          <circle class="drift" cx="132" cy="70" r="16" fill="#7c8099" opacity="0"/>
+          <circle class="drift" cx="160" cy="46" r="20" fill="#6a6e88" opacity="0"/>
+          <circle class="drift" cx="140" cy="20" r="18" fill="#5a5e78" opacity="0"/>
+        </g>
+      </svg>
+      <div class="heat"><span>Heat</span><div class="pips" id="pips"></div></div>
+      <button class="mama" id="mama" type="button">Ask Mama Put<small>Shows one letter, but the fire goes up</small></button>
+    </section>
+
+    <section class="play" aria-label="Puzzle">
+      <div>
+        <div class="cat" id="cat">Chop</div>
+        <p class="clue" id="clue"></p>
+      </div>
+      <div class="board" id="board" aria-live="polite"></div>
+      <div class="msg" id="msg" aria-live="polite"></div>
+      <div class="keys" id="keys"></div>
+      <button class="next" id="next" type="button" hidden>Next pot</button>
+      <p class="how"><b>How to play:</b> tap letters or type on your keyboard. Every wrong letter raises the fire. Six wrong and the pot burns. Each right letter is 10 points; finishing a pot pays a bonus for the heat you saved, and back-to-back finished pots grow your streak multiplier.</p>
+    </section>
+  </div>
+</div>
+
+<div class="overlay" id="overlay" hidden>
+  <div class="card" role="dialog" aria-modal="true" aria-labelledby="ovTitle">
+    <h2 id="ovTitle">Party over!</h2>
+    <div class="final" id="ovScore">0</div>
+    <p id="ovNote"></p>
+    <ul id="ovList"></ul>
+    <button class="next" id="again" type="button">Start another party</button>
+  </div>
+</div>
+
+<script>
+const CATS = { all: "Everything", chop: "Chop", places: "Places", pidgin: "Pidgin & Slang", culture: "Culture & Owambe", proverbs: "Proverbs" };
+const PUZZLES = [
+  ["chop","JOLLOF RICE","Party rice cooked in tomato and pepper stew"],
+  ["chop","POUNDED YAM","Swallow made by beating boiled yam in a mortar"],
+  ["chop","EGUSI SOUP","Soup thickened with ground melon seeds"],
+  ["chop","SUYA","Spicy grilled beef on sticks, sold at night"],
+  ["chop","PUFF PUFF","Sweet fried dough balls"],
+  ["chop","AKARA","Fried bean cakes, best with pap or bread"],
+  ["chop","MOI MOI","Steamed bean pudding, sometimes with egg inside"],
+  ["chop","DODO","Fried ripe plantain"],
+  ["chop","OFADA RICE","Local rice served with ayamase stew"],
+  ["chop","EFO RIRO","Rich Yoruba vegetable soup"],
+  ["chop","PEPPER SOUP","Hot, spicy broth with goat meat or catfish"],
+  ["chop","CHIN CHIN","Crunchy fried snack, a Christmas favourite"],
+  ["chop","NKWOBI","Spicy cow foot in palm oil paste"],
+  ["chop","BOLE","Roasted plantain, a Port Harcourt classic"],
+  ["chop","ABACHA","Igbo cassava salad, also called African salad"],
+  ["chop","AMALA","Dark swallow made from yam flour"],
+  ["chop","TUWO SHINKAFA","Soft rice swallow from the North"],
+  ["chop","ZOBO","Red drink made from hibiscus leaves"],
+  ["chop","KILISHI","Thin dried spiced meat from the North"],
+  ["chop","OGBONO SOUP","Draw soup made from wild mango seeds"],
+  ["chop","BANGA SOUP","Palm fruit soup from the Niger Delta"],
+  ["chop","EDIKANG IKONG","Rich vegetable soup from Akwa Ibom"],
+  ["chop","ASUN","Spicy roasted goat meat"],
+  ["places","LAGOS","Centre of Excellence, and of traffic"],
+  ["places","ABUJA","The Federal Capital Territory"],
+  ["places","KANO","Ancient city famous for its dye pits"],
+  ["places","IBADAN","City of rusty brown roofs"],
+  ["places","PORT HARCOURT","The Garden City"],
+  ["places","ENUGU","The Coal City"],
+  ["places","CALABAR","Hosts a famous December street carnival"],
+  ["places","JOS","Plateau city known for cool weather"],
+  ["places","ABEOKUTA","City under Olumo Rock"],
+  ["places","BENIN CITY","Ancient kingdom known for its bronzes"],
+  ["places","OWERRI","Imo State capital, famous for enjoyment"],
+  ["places","MAIDUGURI","Borno State capital"],
+  ["places","SOKOTO","Seat of the old Caliphate"],
+  ["places","ONITSHA","Home of a giant market on the River Niger"],
+  ["places","OSOGBO","Home of the Osun sacred grove"],
+  ["places","ZUMA ROCK","Giant rock near Abuja"],
+  ["places","OBUDU","Cattle ranch resort on a Cross River mountain"],
+  ["places","YANKARI","Game reserve with warm springs in Bauchi"],
+  ["places","LEKKI","Lagos peninsula of estates and a toll gate"],
+  ["pidgin","NO WAHALA","No problem"],
+  ["pidgin","HOW FAR","Casual greeting: how are you?"],
+  ["pidgin","ABEG","Please"],
+  ["pidgin","WETIN DEY HAPPEN","What is going on?"],
+  ["pidgin","I NO FIT SHOUT","Not my business, I can't be bothered"],
+  ["pidgin","E DON CAST","The secret is out, it has gone wrong"],
+  ["pidgin","JAPA","To relocate abroad"],
+  ["pidgin","SHAKARA","Showing off, forming"],
+  ["pidgin","GBAS GBOS","An exchange of blows"],
+  ["pidgin","SAPA","Being completely broke"],
+  ["pidgin","WAKA PASS","Walked past without stopping"],
+  ["pidgin","K-LEG","Something is not right here"],
+  ["pidgin","NA SO","That's how it is"],
+  ["pidgin","I DEY KAMPE","I am fine and strong"],
+  ["pidgin","CHOP LIFE","Enjoy yourself"],
+  ["pidgin","WAHALA DEY","There is trouble"],
+  ["culture","ASO EBI","Matching fabric worn by a party group"],
+  ["culture","GELE","Big, sculpted head tie"],
+  ["culture","AGBADA","Flowing wide-sleeved robe for men"],
+  ["culture","OWAMBE","A big Yoruba party"],
+  ["culture","DANFO","Yellow Lagos commuter bus"],
+  ["culture","OKADA","Motorcycle taxi"],
+  ["culture","KEKE NAPEP","Three-wheeler taxi"],
+  ["culture","MAMA PUT","Roadside food seller"],
+  ["culture","AGEGE BREAD","Soft, dense Lagos bread"],
+  ["culture","AFROBEATS","Music Nigeria exported to the world"],
+  ["culture","FUJI MUSIC","Percussion-heavy Yoruba music style"],
+  ["culture","HIGHLIFE","Guitar-led West African dance music"],
+  ["culture","NOLLYWOOD","Nigeria's film industry"],
+  ["culture","ADIRE","Indigo tie-dye cloth from Abeokuta"],
+  ["culture","ANKARA","Bold wax-print fabric"],
+  ["culture","TALKING DRUM","Drum whose pitch copies speech"],
+  ["culture","SPRAYING MONEY","Showering cash on dancers at a party"],
+  ["culture","NEPA TAKE LIGHT","What everyone shouts at a power cut"],
+  ["culture","I PASS MY NEIGHBOUR","Nickname for a small generator"],
+  ["culture","AJEBUTTER","Someone raised soft and comfortable"],
+  ["proverbs","EVERY DAY FOR THIEF ONE DAY FOR OWNER","Wrongdoers get caught eventually"],
+  ["proverbs","MONKEY DEY WORK BABOON DEY CHOP","One person labours, another enjoys the reward"],
+  ["proverbs","WHEN TWO ELEPHANTS FIGHT THE GRASS SUFFERS","Ordinary people pay for the quarrels of the powerful"],
+  ["proverbs","DOG WEY GO LOST NO GO HEAR HUNTER WHISTLE","The doomed ignore every warning"],
+  ["proverbs","SHAME NO DEY KILL","Embarrassment won't kill you"],
+  ["proverbs","WHO GET EAR MAKE E HEAR","Let whoever has ears listen"],
+  ["proverbs","WHAT AN OLD MAN SEES SITTING A CHILD CANNOT SEE STANDING","Respect the wisdom of elders"]
+];
+const MAX = 6, ROUNDS = 5;
+const RIGHT = ["Nice one!", "Well done!", "Correct!", "Great guess!", "You're on fire!", "Keep going!"];
+const WRONG = ["Oh no!", "Not quite!", "Try again!", "Careful now!", "That's not it!", "The pot is getting hot!"];
+const $ = id => document.getElementById(id);
+const pick = a => a[Math.floor(Math.random() * a.length)];
+
+let best = 0;
+try { best = +localStorage.getItem("jollof-best") || 0; } catch (e) {}
+let S;
+
+const VOICE_OK = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+let voiceOn = true, voice = null;
+try { voiceOn = localStorage.getItem("jollof-voice") !== "off"; } catch (e) {}
+const TONE = { good: [1.05, 1.25], bad: [0.85, 0.75], big: [0.95, 1] };
+function pickVoice() {
+  const vs = speechSynthesis.getVoices().filter(v => /^en/i.test(v.lang));
+  const by = re => vs.find(v => re.test(v.lang) || re.test(v.name));
+  voice = by(/en[-_]NG|Nigeria/i) || by(/en[-_](GH|KE|ZA)|Ghana|Kenya|South Africa/i) || by(/en[-_]GB/i) || vs[0] || null;
+  const vb = document.getElementById("voice");
+  if (vb) vb.title = voice ? "Voice: " + voice.name : "";
+}
+if (VOICE_OK) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+function say(text, mood) {
+  if (!VOICE_OK || !voiceOn) return;
+  try {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    if (voice) { u.voice = voice; u.lang = voice.lang; } else u.lang = "en-NG";
+    [u.rate, u.pitch] = TONE[mood] || [1, 1];
+    speechSynthesis.speak(u);
+  } catch (e) {}
+}
+
+function newParty(cat) {
+  S = { cat: cat || (S && S.cat) || "all", round: 0, score: 0, streak: 0, used: [], history: [] };
+  $("overlay").hidden = true;
+  nextPot();
+}
+function nextPot() {
+  let pool = PUZZLES.map((p, i) => i).filter(i => S.cat === "all" || PUZZLES[i][0] === S.cat);
+  let fresh = pool.filter(i => !S.used.includes(i));
+  if (!fresh.length) { S.used = []; fresh = pool; }
+  const idx = pick(fresh);
+  S.used.push(idx);
+  S.round++;
+  S.idx = idx; S.guessed = []; S.misses = 0; S.status = "playing"; S.msg = ["", ""]; S.fresh = [];
+  render();
+}
+const answer = () => PUZZLES[S.idx][1];
+const letters = () => [...new Set(answer().replace(/[^A-Z]/g, ""))];
+const solved = () => letters().every(l => S.guessed.includes(l));
+const mult = () => 1 + Math.min(S.streak, 4) * 0.5;
+
+function guess(l) {
+  if (S.status !== "playing" || S.guessed.includes(l)) return;
+  S.guessed.push(l);
+  const n = answer().split(l).length - 1;
+  if (n) {
+    S.score += 10 * n;
+    S.fresh = [l];
+    S.msg = [pick(RIGHT), n > 1 ? n + " " + l + "s, +" + 10 * n : "+10", "good"];
+    say(S.msg[0], "good");
+    if (solved()) return win();
+  } else {
+    S.misses++;
+    S.fresh = [];
+    S.msg = [pick(WRONG), "There's no " + l + " in this one", "bad"];
+    say(S.msg[0], "bad");
+    shake();
+    if (S.misses >= MAX) return lose();
+  }
+  render();
+}
+function askMama() {
+  if (S.status !== "playing" || S.misses >= MAX - 1) return;
+  const left = letters().filter(l => !S.guessed.includes(l));
+  if (!left.length) return;
+  const l = pick(left);
+  S.guessed.push(l);
+  S.misses++;
+  S.fresh = [l];
+  S.msg = ["Mama Put says: " + l, "The fire went up a little", "big"];
+  say("Mama Put says, try the letter " + l + ". The fire went up a little.", "big");
+  if (solved()) return win();
+  render();
+}
+function win() {
+  const bonus = Math.round((50 + 20 * (MAX - S.misses)) * mult());
+  S.score += bonus;
+  S.streak++;
+  S.status = "won";
+  S.history.push([answer(), true]);
+  say("The jollof is ready!", "good");
+  S.msg = ["The jollof is ready!", "Bonus +" + bonus + (mult() > 1 ? " (streak x" + mult() + ")" : ""), "good"];
+  render();
+}
+function lose() {
+  S.streak = 0;
+  S.status = "lost";
+  S.history.push([answer(), false]);
+  say("Oh no, the pot burnt! The answer was " + answer() + ".", "bad");
+  S.msg = ["The pot burnt!", "The answer was " + answer(), "bad"];
+  render();
+}
+function proceed() {
+  if (S.round >= ROUNDS) return finish();
+  nextPot();
+}
+function finish() {
+  S.status = "over";
+  const isBest = S.score > best;
+  if (isBest) { best = S.score; try { localStorage.setItem("jollof-best", best); } catch (e) {} }
+  const ok = S.history.filter(h => h[1]).length;
+  $("ovTitle").textContent = ok === ROUNDS ? "Master chef! Not one pot burnt." : ok >= 3 ? "Party over. Nice cooking!" : "Oh dear, the guests are still hungry!";
+  $("ovScore").textContent = S.score;
+  say($("ovTitle").textContent, "big");
+  $("ovNote").textContent = (isBest ? "New best score! " : "Best: " + best + ". ") + ok + " of " + ROUNDS + " pots served.";
+  $("ovList").innerHTML = S.history.map(h => `<li><span>${h[0]}</span><span class="${h[1] ? "r-ok" : "r-no"}">${h[1] ? "Served" : "Burnt"}</span></li>`).join("");
+  $("overlay").hidden = false;
+  render();
+  $("again").focus();
+}
+function shake() {
+  const b = $("board");
+  b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake");
+}
+
+function render() {
+  const p = PUZZLES[S.idx];
+  $("score").textContent = S.score;
+  $("round").textContent = S.round + "/" + ROUNDS;
+  $("streak").textContent = "x" + mult();
+  $("best").textContent = Math.max(best, S.score);
+  $("cat").textContent = CATS[p[0]];
+  $("clue").textContent = p[2];
+
+  const over = S.status !== "playing";
+  $("board").innerHTML = p[1].split(" ").map(w => `<div class="word">${[...w].map(c => {
+    if (!/[A-Z]/.test(c)) return `<div class="tile punct">${c}</div>`;
+    const has = S.guessed.includes(c);
+    if (has) return `<div class="tile${S.fresh.includes(c) ? " show" : ""}">${c}</div>`;
+    return over ? `<div class="tile missed show">${c}</div>` : `<div class="tile" aria-label="blank"></div>`;
+  }).join("")}</div>`).join("");
+
+  const [m, sub, cls] = S.msg;
+  $("msg").className = "msg " + (cls || "");
+  $("msg").innerHTML = m ? `${m}<small>${sub}</small>` : `<small>Pick a letter to start cooking</small>`;
+
+  document.querySelectorAll(".key").forEach(k => {
+    const l = k.dataset.l, g = S.guessed.includes(l);
+    k.className = "key" + (g ? (answer().includes(l) ? " hit" : " miss") : "");
+    k.disabled = g || over;
+  });
+
+  $("pips").innerHTML = Array.from({ length: MAX }, (_, i) => `<span class="pip${i < S.misses ? " on" : ""}"></span>`).join("");
+  $("mama").disabled = over || S.misses >= MAX - 1;
+
+  const pot = $("pot");
+  pot.classList.toggle("won", S.status === "won");
+  pot.classList.toggle("lost", S.status === "lost");
+  $("fire").style.transform = `scale(${S.status === "won" ? 0.25 : 0.3 + S.misses * 0.12})`;
+  $("glow").setAttribute("opacity", (S.misses / MAX * 0.8).toFixed(2));
+  $("potbody").setAttribute("fill", S.status === "lost" ? "#1a1a20" : "#33343f");
+  $("food").setAttribute("fill", S.status === "lost" ? "#1b1410" : "#e4532b");
+  const smoke = [...$("smoke").children];
+  smoke.forEach((c, i) => {
+    const on = S.status === "lost" ? 1 : S.misses >= 3 + i ? 0.35 + 0.2 * (S.misses - 3) : 0;
+    c.setAttribute("opacity", Math.min(on, 0.95));
+    c.setAttribute("fill", S.status === "lost" ? ["#262630", "#1d1d26", "#16161d"][i] : ["#7c8099", "#6a6e88", "#5a5e78"][i]);
+  });
+  pot.setAttribute("aria-label", S.status === "lost" ? "The pot has burnt" : S.status === "won" ? "Steaming pot of jollof, ready to serve" : `Pot on the fire, heat ${S.misses} of ${MAX}`);
+
+  const nx = $("next");
+  nx.hidden = !(S.status === "won" || S.status === "lost");
+  nx.textContent = S.round >= ROUNDS ? "See party results" : "Next pot";
+
+  document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c.dataset.c === S.cat));
+}
+
+function build() {
+  const rows = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
+  $("keys").innerHTML = rows.map(r => `<div class="row">${[...r].map(l => `<button class="key" type="button" data-l="${l}" aria-label="Letter ${l}">${l}</button>`).join("")}</div>`).join("");
+  $("keys").addEventListener("click", e => { const k = e.target.closest(".key"); if (k) guess(k.dataset.l); });
+  $("chips").insertAdjacentHTML("beforeend", Object.entries(CATS).map(([k, v]) => `<button class="chip" type="button" data-c="${k}" aria-pressed="false">${v}</button>`).join(""));
+  $("chips").addEventListener("click", e => { const c = e.target.closest(".chip"); if (c) newParty(c.dataset.c); });
+  $("mama").addEventListener("click", askMama);
+  const vb = $("voice");
+  vb.hidden = !VOICE_OK;
+  const setVb = () => { vb.setAttribute("aria-pressed", voiceOn); vb.querySelector("b").textContent = voiceOn ? "On" : "Off"; };
+  setVb();
+  vb.addEventListener("click", () => {
+    voiceOn = !voiceOn;
+    try { localStorage.setItem("jollof-voice", voiceOn ? "on" : "off"); } catch (e) {}
+    if (voiceOn) say("Let's cook!", "good"); else speechSynthesis.cancel();
+    setVb();
+  });
+  $("next").addEventListener("click", proceed);
+  $("again").addEventListener("click", () => newParty());
+  document.addEventListener("keydown", e => {
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if (S.status === "over") return;
+    if (e.key === "Enter" && !$("next").hidden) { e.preventDefault(); return proceed(); }
+    const l = e.key.toUpperCase();
+    if (/^[A-Z]$/.test(l)) guess(l);
+  });
+}
+
+function start(data) {
+  build();
+  if (data && data.S && PUZZLES[data.S.idx]) {
+    S = data.S;
+    render();
+    if (S.status === "over") finish();
+  } else newParty("all");
+}
+window.claude?.hot?.snapshot?.(() => ({ S }));
+window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
+</script>
+</body>
+</html>
