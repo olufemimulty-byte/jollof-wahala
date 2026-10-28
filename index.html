@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Guess the Naija food, place, slang or proverb letter by letter before the jollof pot burns.">
+<meta name="description" content="Guess Naija food, places, slang, music stars, Nollywood actors and footballers letter by letter before the jollof pot burns.">
 <meta name="theme-color" content="#111733">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -111,14 +111,16 @@ h1 {
 }
 .cat { font-size: .74rem; text-transform: uppercase; letter-spacing: .14em; color: var(--palm); font-weight: 800; }
 .clue { margin: 2px 0 0; font-size: 1.05rem; color: var(--text); max-width: 60ch; }
-.board { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 22px; padding-block: 6px; min-height: 64px; }
+/* --n is the longest word's length, so tiles shrink until that word fits on one line */
+.board { container-type: inline-size; display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 22px; padding-block: 6px; min-height: 64px; --n: 8; }
 .word { display: flex; gap: 4px; }
 .tile {
-  width: clamp(24px, 5.6vw, 40px); height: clamp(34px, 7.6vw, 52px);
+  --tw: min(40px, calc((100cqi - (var(--n) - 1) * 4px) / var(--n)));
+  width: var(--tw); height: calc(var(--tw) * 1.3);
   display: grid; place-items: center;
   background: var(--cloth); color: var(--cloth-ink);
   border-radius: 6px; border-bottom: 4px solid var(--cloth-edge);
-  font-family: var(--display); font-size: clamp(1.1rem, 3.6vw, 1.8rem);
+  font-family: var(--display); font-size: calc(var(--tw) * .68);
 }
 .tile.show { animation: flip .35s ease-out; }
 .tile.missed { color: var(--jollof); }
@@ -283,7 +285,7 @@ button:focus-visible { outline: 3px solid var(--palm); outline-offset: 2px; }
 </div>
 
 <script>
-const CATS = { all: "Everything", chop: "Chop", places: "Places", pidgin: "Pidgin & Slang", culture: "Culture & Owambe", proverbs: "Proverbs" };
+const CATS = { all: "Everything", chop: "Chop", places: "Places", pidgin: "Pidgin & Slang", culture: "Culture & Owambe", proverbs: "Proverbs", music: "Music", musicians: "Musicians", actors: "Actors & Nollywood", football: "Football", footballers: "Footballers" };
 const PUZZLES = [
   ["chop","JOLLOF RICE","Party rice cooked in tomato and pepper stew"],
   ["chop","POUNDED YAM","Swallow made by beating boiled yam in a mortar"],
@@ -352,9 +354,6 @@ const PUZZLES = [
   ["culture","KEKE NAPEP","Three-wheeler taxi"],
   ["culture","MAMA PUT","Roadside food seller"],
   ["culture","AGEGE BREAD","Soft, dense Lagos bread"],
-  ["culture","AFROBEATS","Music Nigeria exported to the world"],
-  ["culture","FUJI MUSIC","Percussion-heavy Yoruba music style"],
-  ["culture","HIGHLIFE","Guitar-led West African dance music"],
   ["culture","NOLLYWOOD","Nigeria's film industry"],
   ["culture","ADIRE","Indigo tie-dye cloth from Abeokuta"],
   ["culture","ANKARA","Bold wax-print fabric"],
@@ -369,7 +368,105 @@ const PUZZLES = [
   ["proverbs","DOG WEY GO LOST NO GO HEAR HUNTER WHISTLE","The doomed ignore every warning"],
   ["proverbs","SHAME NO DEY KILL","Embarrassment won't kill you"],
   ["proverbs","WHO GET EAR MAKE E HEAR","Let whoever has ears listen"],
-  ["proverbs","WHAT AN OLD MAN SEES SITTING A CHILD CANNOT SEE STANDING","Respect the wisdom of elders"]
+  ["proverbs","WHAT AN OLD MAN SEES SITTING A CHILD CANNOT SEE STANDING","Respect the wisdom of elders"],
+  ["music","AFROBEATS","Modern Nigerian pop sound that took over the world"],
+  ["music","AFROBEAT","Fela's fusion of jazz, funk and highlife"],
+  ["music","FUJI MUSIC","Percussion-heavy Yoruba music style"],
+  ["music","HIGHLIFE","Guitar-led West African dance music"],
+  ["music","JUJU MUSIC","Guitar and talking drum style made famous by King Sunny Ade"],
+  ["music","APALA","Yoruba percussion music with Islamic roots"],
+  ["music","AMAPIANO","South African sound that took over Naija parties"],
+  ["music","STREET POP","Raw, high-energy sound from the streets of Lagos"],
+  ["music","THE SHRINE","Fela's famous performance venue in Lagos"],
+  ["music","FELABRATION","Yearly festival celebrating Fela's life"],
+  ["music","SHEKERE","Gourd rattle covered in a net of beads"],
+  ["music","UDU","Clay pot drum from Igbo land"],
+  ["music","THE HEADIES","Nigeria's biggest music awards"],
+  ["music","ESSENCE","Wizkid and Tems hit that went global in 2021"],
+  ["music","LAST LAST","Burna Boy's 2022 heartbreak anthem"],
+  ["music","CALM DOWN","Rema's worldwide hit, remixed with Selena Gomez"],
+  ["music","AFRICAN GIANT","Burna Boy's 2019 album, also his nickname"],
+  ["music","MADE IN LAGOS","Wizkid's 2020 album"],
+  ["music","UNAVAILABLE","Davido's 2023 hit with Musa Keys"],
+  ["music","RUSH","Ayra Starr's 2022 breakout single"],
+  ["music","KU LO SA","Oxlade's 2022 hit"],
+  ["musicians","FELA KUTI","Father of Afrobeat"],
+  ["musicians","BURNA BOY","Grammy winner who calls himself the African Giant"],
+  ["musicians","WIZKID","Starboy from Surulere"],
+  ["musicians","DAVIDO","OBO, Omo Baba Olowo"],
+  ["musicians","TIWA SAVAGE","Often called the Queen of Afrobeats"],
+  ["musicians","REMA","Calm Down singer from Benin City"],
+  ["musicians","TEMS","Grammy-winning singer featured on Essence"],
+  ["musicians","AYRA STARR","The Sabi Girl"],
+  ["musicians","ASAKE","Mr Money with the Vibe"],
+  ["musicians","KING SUNNY ADE","Juju music legend"],
+  ["musicians","EBENEZER OBEY","Juju legend known as the Chief Commander"],
+  ["musicians","ONYEKA ONWENU","The Elegant Stallion"],
+  ["musicians","OLAMIDE","Baddo, boss of YBNL"],
+  ["musicians","FLAVOUR","Highlife star behind the Ashawo remix"],
+  ["musicians","YEMI ALADE","Mama Africa, singer of Johnny"],
+  ["musicians","PHYNO","Rapper famous for rapping in Igbo"],
+  ["musicians","KIZZ DANIEL","Singer of the 2022 hit Buga"],
+  ["musicians","OLIVER DE COQUE","Igbo highlife guitar legend"],
+  ["musicians","ASA","Soulful singer of Jailer"],
+  ["musicians","P-SQUARE","Twin brothers behind Personally"],
+  ["musicians","FALZ","Rapper and actor behind This Is Nigeria"],
+  ["musicians","SIMI","Singer of Joromi"],
+  ["actors","GENEVIEVE NNAJI","Star and director of Lionheart"],
+  ["actors","RAMSEY NOUAH","Directed and starred in Living in Bondage: Breaking Free"],
+  ["actors","FUNKE AKINDELE","Plays the famous character Jenifa"],
+  ["actors","NKEM OWOH","Comic actor known as Osuofia"],
+  ["actors","PETE EDOCHIE","Veteran who played Okonkwo in Things Fall Apart on TV"],
+  ["actors","OSITA IHEME","Pawpaw from Aki na Ukwa"],
+  ["actors","CHINEDU IKEDIEZE","Aki from Aki na Ukwa"],
+  ["actors","RICHARD MOFE DAMIJO","Veteran actor known as RMD"],
+  ["actors","OMOTOLA","Nollywood queen nicknamed Omosexy"],
+  ["actors","OLU JACOBS","Veteran actor married to Joke Silva"],
+  ["actors","JOKE SILVA","Veteran actress married to Olu Jacobs"],
+  ["actors","RITA DOMINIC","Star of the 2012 romantic film The Meeting"],
+  ["actors","KANAYO O KANAYO","Veteran actor famous for villain roles"],
+  ["actors","JIM IYKE","Bad-boy heartthrob of 2000s Nollywood"],
+  ["actors","CHIWETEL EJIOFOR","British-Nigerian star of 12 Years a Slave"],
+  ["actors","DAVID OYELOWO","Played Martin Luther King Jr in Selma"],
+  ["actors","JOHN BOYEGA","Played Finn in Star Wars"],
+  ["actors","LIVING IN BONDAGE","1992 film that launched Nollywood"],
+  ["actors","THE WEDDING PARTY","Hit 2016 Lagos wedding comedy"],
+  ["actors","KING OF BOYS","Kemi Adetiba's crime saga about Eniola Salami"],
+  ["actors","LIONHEART","Genevieve Nnaji's film bought by Netflix"],
+  ["actors","A TRIBE CALLED JUDAH","Funke Akindele's record-breaking 2023 film"],
+  ["football","SUPER EAGLES","Nigeria's men's national team"],
+  ["football","SUPER FALCONS","Nigeria's women's team, kings of African football"],
+  ["football","GOLDEN EAGLETS","Under-17 team with a record five World Cup titles"],
+  ["football","FLYING EAGLES","Nigeria's under-20 team"],
+  ["football","DREAM TEAM","Squad that won Olympic gold at Atlanta 1996"],
+  ["football","AFCON","Africa Cup of Nations, won by Nigeria in 1980, 1994 and 2013"],
+  ["football","ENYIMBA","Aba club, African champions in 2003 and 2004"],
+  ["football","KANO PILLARS","Northern club whose fans chant Sai Masu Gida"],
+  ["football","RANGERS INTERNATIONAL","Enugu club known as the Flying Antelopes"],
+  ["football","SHOOTING STARS","Ibadan club also called 3SC"],
+  ["football","HEARTLAND","Owerri club once called Iwuanyanwu Nationale"],
+  ["football","NPFL","Nigeria's top professional football league"],
+  ["football","GODSWILL AKPABIO STADIUM","Uyo stadium called the Nest of Champions"],
+  ["football","MOSHOOD ABIOLA STADIUM","The national stadium in Abuja"],
+  ["footballers","JAY JAY OKOCHA","So good they named him twice"],
+  ["footballers","NWANKWO KANU","Papilo, captain of the 1996 Olympic gold team"],
+  ["footballers","RASHIDI YEKINI","Scored Nigeria's first ever World Cup goal"],
+  ["footballers","VICTOR OSIMHEN","2023 African Footballer of the Year"],
+  ["footballers","ADEMOLA LOOKMAN","Hat-trick hero of the 2024 Europa League final"],
+  ["footballers","ASISAT OSHOALA","Record six-time African Women's Footballer of the Year"],
+  ["footballers","MIKEL OBI","Won the Champions League with Chelsea in 2012"],
+  ["footballers","VINCENT ENYEAMA","Super Eagles goalkeeping legend"],
+  ["footballers","STEPHEN KESHI","Big Boss, won AFCON as a player and as a coach"],
+  ["footballers","SEGUN ODEGBAMI","Winger nicknamed Mathematical"],
+  ["footballers","SUNDAY OLISEH","Scored the famous long-range goal against Spain in 1998"],
+  ["footballers","DANIEL AMOKACHI","Striker nicknamed The Bull"],
+  ["footballers","FINIDI GEORGE","Won the Champions League with Ajax in 1995"],
+  ["footballers","AHMED MUSA","Scored twice against Argentina at the 2014 World Cup"],
+  ["footballers","WILFRED NDIDI","Leicester midfielder who won the FA Cup in 2021"],
+  ["footballers","ALEX IWOBI","Midfielder whose uncle is Jay Jay Okocha"],
+  ["footballers","TARIBO WEST","Defender famous for his colourful braids"],
+  ["footballers","PERPETUA NKWOCHA","Super Falcons legend, four-time African player of the year"],
+  ["footballers","KELECHI IHEANACHO","Striker who came through Manchester City"]
 ];
 const MAX = 6, ROUNDS = 5;
 const RIGHT = ["Nice one!", "Well done!", "Correct!", "Great guess!", "You're on fire!", "Keep going!"];
@@ -508,6 +605,7 @@ function render() {
   $("clue").textContent = p[2];
 
   const over = S.status !== "playing";
+  $("board").style.setProperty("--n", Math.max(6, ...p[1].split(" ").map(w => w.length)));
   $("board").innerHTML = p[1].split(" ").map(w => `<div class="word">${[...w].map(c => {
     if (!/[A-Z]/.test(c)) return `<div class="tile punct">${c}</div>`;
     const has = S.guessed.includes(c);

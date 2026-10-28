@@ -1,5 +1,5 @@
 # Jollof Wahala
 
-A Nigerian word-guessing game. Guess the Naija food, place, slang or proverb letter by letter before the jollof pot burns.
+A Nigerian word-guessing game. Guess Naija food, places, slang, music, Nollywood and football trivia letter by letter before the jollof pot burns.
 
 Play: https://olufemimulty-byte.github.io/jollof-wahala/
