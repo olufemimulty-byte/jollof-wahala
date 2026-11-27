@@ -1,0 +1,56 @@
+FRIED RICE|Party rice cooked with liver, carrots and green beans
+COCONUT RICE|Rice cooked in coconut milk
+ROASTED CORN|Roadside snack often eaten with ube
+UBE|Purple pear eaten with roasted corn
+GARRI|Cassava granules you can soak with sugar or turn into eba
+EBA|Swallow made by stirring garri into hot water
+FUFU|Fermented cassava swallow
+SEMOVITA|Popular wheat semolina swallow
+STARCH|Smooth swallow from the Niger Delta, eaten with banga
+OWHO SOUP|Urhobo soup thickened with palm oil and potash
+AFANG SOUP|Efik and Ibibio soup of afang leaves and waterleaf
+OHA SOUP|Igbo soup made with tender oha leaves
+BITTERLEAF SOUP|Igbo soup known as ofe onugbu
+GBEGIRI|Yoruba bean soup served with ewedu and amala
+EWEDU|Slimy jute leaf soup
+ABULA|Amala served with gbegiri and ewedu together
+OFE NSALA|Igbo white soup cooked without palm oil
+FISHERMAN SOUP|Seafood soup from the Niger Delta
+DANWAKE|Hausa dumplings made from bean flour
+MIYAN KUKA|Hausa soup made from baobab leaves
+FURA DA NONO|Millet balls mixed into fermented milk
+KUNU|Northern drink made from millet or sorghum
+MASA|Northern rice cakes, also called waina
+KOSAI|Hausa name for bean fritters
+PAP|Fermented corn porridge, also called ogi or akamu
+AGIDI|Corn starch pudding wrapped in leaves, also called eko
+EKURU|White bean pudding made without pepper or oil
+ISI EWU|Spicy goat head delicacy
+PLANTAIN PORRIDGE|Plantain cooked down with palm oil and vegetables
+ASARO|Yoruba name for yam porridge
+EWA AGOYIN|Mashed beans served with a dark pepper sauce
+MEAT PIE|Pastry filled with minced meat and potatoes
+SCOTCH EGG|Boiled egg wrapped in sausage meat and fried
+SAUSAGE ROLL|Pastry wrapped around a sausage filling
+BUNS|Dense fried dough snack, crunchier than puff puff
+PLANTAIN CHIPS|Crunchy snack sold to drivers in traffic
+KULI KULI|Crunchy snack made from groundnut paste
+GROUNDNUT|What Nigerians call peanuts
+TIGER NUT|Called aya in Hausa, used to make a milky drink
+CHAPMAN|Fruity red mocktail served at parties
+PALM WINE|Sap tapped from palm trees
+BURUKUTU|Fermented sorghum drink
+OGOGORO|Strong local gin
+OKRO SOUP|Draw soup made with chopped okra
+GIZDODO|Gizzard and plantain in pepper sauce
+AYAMASE|Green pepper sauce known as designer stew
+SHAKI|Cow tripe
+PONMO|Cow skin
+STOCKFISH|Dried cod used in many soups
+CRAYFISH|Ground dried shrimp that flavours soup
+UZIZA|Peppery leaf used in Igbo soups
+UGWU|Fluted pumpkin leaf
+YAJI|Spicy groundnut mix rubbed on suya
+OKPA|Bambara nut pudding from Enugu
+EKPANG NKUKWO|Cocoyam and leaf dish from Calabar
+SINASIR|Hausa rice pancake

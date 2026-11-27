@@ -1,0 +1,17 @@
+{
+  "name": "Jollof Wahala",
+  "short_name": "Jollof Wahala",
+  "description": "Guess the Naija word, letter by letter, before the jollof pot burns.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#111733",
+  "theme_color": "#111733",
+  "categories": ["games", "entertainment", "education"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "name": "jollof-wahala",
+  "productName": "Jollof Wahala",
+  "version": "1.0.0",
+  "description": "Guess the Naija word before the jollof pot burns.",
+  "main": "main.js",
+  "author": "Jollof Wahala",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win nsis"
+  },
+  "build": {
+    "appId": "io.github.olufemimulty-byte.jollofwahala",
+    "productName": "Jollof Wahala",
+    "artifactName": "Jollof-Wahala-Setup-${version}.${ext}",
+    "directories": { "output": "dist" },
+    "files": ["main.js", "icon.ico", "offline/**/*"],
+    "win": { "target": "nsis", "icon": "icon.ico" },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "shortcutName": "Jollof Wahala",
+      "installerIcon": "icon.ico",
+      "uninstallerIcon": "icon.ico",
+      "runAfterFinish": true
+    }
+  },
+  "devDependencies": {
+    "electron": "33.2.1",
+    "electron-builder": "25.1.8"
+  }
+}

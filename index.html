@@ -11,7 +11,10 @@
 <meta name="apple-mobile-web-app-title" content="Jollof Wahala">
 <meta property="og:title" content="Jollof Wahala">
 <meta property="og:description" content="Guess the Naija word before the jollof pot burns.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111733'/%3E%3Cpath d='M32 54C18 50 20 36 27 30c0 7 4 8 5 7-2-9 3-17 9-21-1 9 7 15 7 24 0 9-7 14-16 14z' fill='%23e4532b'/%3E%3Cpath d='M32 54c-6-2-7-8-3-12 1 4 4 4 5 2 2 3 4 9-2 10z' fill='%23f4a83a'/%3E%3C/svg%3E">
+<meta property="og:image" content="icons/icon-512.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}</style>
 <title>Jollof Wahala</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1431,6 +1434,33 @@ function start(data) {
 }
 window.claude?.hot?.snapshot?.(() => ({ S }));
 window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
+</script>
+<div class="update" id="update" role="status" hidden>
+  <span>A new version of Jollof Wahala is ready.</span>
+  <button type="button" id="updateBtn">Update now</button>
+</div>
+<style>
+.update { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 30; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; max-width: calc(100% - 32px); background: #f0e7d3; color: #1a1f3d; border-radius: 14px; padding: 10px 12px 10px 16px; box-shadow: 0 10px 30px rgba(0,0,0,.45); font: 600 .92rem "Bricolage Grotesque", system-ui, sans-serif; }
+.update button { font: 400 1rem "Lilita One", Impact, sans-serif; background: #e4532b; color: #fff; border: none; border-radius: 9px; padding: 8px 14px; cursor: pointer; }
+</style>
+<script>
+// Installable app + update notice: compares this page's version with version.json on the server
+const APP_VERSION = "20261127T1008";
+(function () {
+  if (!location.protocol.startsWith("http")) return;
+  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+  const bar = document.getElementById("update");
+  document.getElementById("updateBtn").addEventListener("click", () => location.reload());
+  async function check() {
+    try {
+      const r = await fetch("version.json?t=" + Date.now(), { cache: "no-store" });
+      if (r.ok && (await r.json()).version !== APP_VERSION) bar.hidden = false;
+    } catch (e) {}
+  }
+  check();
+  setInterval(check, 30 * 60 * 1000);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) check(); });
+})();
 </script>
 </body>
 </html>

@@ -1,0 +1,55 @@
+KADUNA|Former capital of the old Northern Region
+ZARIA|Home of Ahmadu Bello University
+ILORIN|Kwara State capital
+AKURE|Ondo State capital
+ADO EKITI|Ekiti State capital
+UYO|Akwa Ibom State capital
+ASABA|Delta State capital on the River Niger
+WARRI|Oil city in Delta State, famous for quick-witted people
+AWKA|Anambra State capital
+UMUAHIA|Abia State capital
+ABA|Commercial city famous for Made in Aba goods
+ABAKALIKI|Ebonyi State capital
+MAKURDI|Benue State capital, in the Food Basket of the Nation
+LAFIA|Nasarawa State capital
+LOKOJA|Kogi city where the Niger and Benue rivers meet
+MINNA|Niger State capital
+BAUCHI|State whose capital is near Yankari Game Reserve
+GOMBE|Gombe State capital
+YOLA|Adamawa State capital
+JALINGO|Taraba State capital
+DAMATURU|Yobe State capital
+DUTSE|Jigawa State capital
+KATSINA|Ancient Hausa city and state capital
+BIRNIN KEBBI|Kebbi State capital
+GUSAU|Zamfara State capital
+YENAGOA|Bayelsa State capital
+IKEJA|Lagos State capital
+IKOYI|Upscale neighbourhood on Lagos Island
+VICTORIA ISLAND|Lagos business district called VI
+SURULERE|Lagos area home to the National Stadium
+YABA|Lagos tech hub nicknamed Yabacon Valley
+IKORODU|Large town on the edge of Lagos
+BADAGRY|Coastal town with relics of the slave trade
+EPE|Lagos town famous for its fish market
+IDANRE|Ondo town famous for its hills and long staircase
+ILE IFE|Spiritual home of the Yoruba
+OYO|Seat of the Alaafin and an old Yoruba empire
+OGBOMOSHO|Oyo town, home of LAUTECH
+IJEBU ODE|Town that hosts the Ojude Oba festival
+NSUKKA|Home of the University of Nigeria
+BONNY ISLAND|Island where Nigeria LNG processes gas
+ERIN IJESHA|Osun town with a waterfall called Olumirin
+GURARA FALLS|Waterfall in Niger State
+KAINJI DAM|Large hydroelectric dam on the River Niger
+ASO ROCK|Rock behind the Presidential Villa in Abuja
+OLUMO ROCK|Abeokuta rock that once sheltered the Egba people
+MAMBILLA PLATEAU|Cool high plateau in Taraba State
+CHAPPAL WADDI|Nigeria's highest mountain
+TINAPA|Business and leisure resort in Calabar
+KOFAR MATA|Ancient dye pits in Kano
+RIVER NIGER|The great river that gave Nigeria its name
+RIVER BENUE|Main tributary of the Niger
+LAKE CHAD|Shrinking lake in the far north-east
+NIGER DELTA|Oil-rich region where the river meets the sea
+THIRD MAINLAND BRIDGE|Long Lagos bridge across the lagoon

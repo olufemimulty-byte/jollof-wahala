@@ -1,0 +1,55 @@
+E KAABO|Welcome, in Yoruba
+E SE|Thank you, in Yoruba
+BAWO NI|How are you?, in Yoruba
+E KAARO|Good morning, in Yoruba
+O DABO|Goodbye, in Yoruba
+OMI|Water, in Yoruba
+ILE|House or home, in Yoruba
+OUNJE|Food, in Yoruba
+OWO|Money, in Yoruba
+IYA|Mother, in Yoruba
+BABA|Father, in Yoruba
+EGBON|Older sibling, in Yoruba
+ABURO|Younger sibling, in Yoruba
+ORE|Friend, in Yoruba
+OKO|Husband, in Yoruba
+NNOO|Welcome, in Igbo
+DAALU|Thank you, in Igbo
+KEDU|How are you?, in Igbo
+NNE|Mother, in Igbo
+NNA|Father, in Igbo
+MMIRI|Water, in Igbo
+NRI|Food, in Igbo
+EGO|Money, in Igbo
+ULO|House, in Igbo
+ENYI|Friend, in Igbo
+CHUKWU|God, in Igbo
+NWANNE|Sibling or relative, in Igbo
+ISI|Head, in Igbo
+UMU|Children, in Igbo
+SANNU|Hello, in Hausa
+NAGODE|Thank you, in Hausa
+INA KWANA|Good morning, in Hausa
+SAI ANJIMA|See you later, in Hausa
+RUWA|Water, in Hausa
+ABINCI|Food, in Hausa
+KUDI|Money, in Hausa
+GIDA|House, in Hausa
+ABOKI|Friend, in Hausa
+UWA|Mother, in Hausa
+YARO|Boy, in Hausa
+YARINYA|Girl, in Hausa
+MAI GADI|Security guard, in Hausa
+LAFIYA|Good health, in Hausa
+KOYO|Hello, in Edo
+YORUBA|Main language of the south-west
+IGBO|Main language of the south-east
+HAUSA|Most widely spoken language in the north
+FULFULDE|Language of the Fulani
+KANURI|Main language of Borno
+TIV|Language of Benue's largest ethnic group
+IBIBIO|Main language of Akwa Ibom
+IJAW|Language family of the Niger Delta
+EFIK|Language of Calabar
+URHOBO|Language of a large Delta State people
+NUPE|Language spoken around Bida in Niger State

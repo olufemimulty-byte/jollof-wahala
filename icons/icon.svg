@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2c3b86"/>
+      <stop offset="1" stop-color="#111733"/>
+    </linearGradient>
+    <linearGradient id="pot" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4b4d5c"/>
+      <stop offset=".55" stop-color="#2f303b"/>
+      <stop offset="1" stop-color="#1f2028"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <g fill="#ffffff" opacity=".06">
+    <circle cx="64" cy="64" r="14"/><circle cx="448" cy="64" r="14"/><circle cx="64" cy="448" r="14"/><circle cx="448" cy="448" r="14"/>
+    <circle cx="256" cy="40" r="8"/><circle cx="40" cy="256" r="8"/><circle cx="472" cy="256" r="8"/>
+  </g>
+  <path d="M256 478 C186 456 192 396 224 364 C222 400 246 408 252 400 C238 360 258 314 292 290 C284 336 324 360 326 406 C330 450 304 474 256 478Z" fill="#e4532b"/>
+  <path d="M256 478 C220 466 220 430 240 410 C244 430 256 432 260 426 C258 404 270 384 284 374 C284 402 302 424 300 448 C298 466 284 478 256 478Z" fill="#f4a83a"/>
+  <path d="M256 478 C242 474 240 458 250 448 C254 458 262 456 264 450 C270 460 270 474 256 478Z" fill="#ffe08a"/>
+  <rect x="70" y="200" width="52" height="26" rx="13" fill="#24252e"/>
+  <rect x="390" y="200" width="52" height="26" rx="13" fill="#24252e"/>
+  <path d="M104 198 Q100 388 256 388 Q412 388 408 198 Z" fill="url(#pot)"/>
+  <path d="M138 240 Q142 326 196 356" stroke="#ffffff" stroke-opacity=".16" stroke-width="16" fill="none" stroke-linecap="round"/>
+  <ellipse cx="256" cy="198" rx="158" ry="32" fill="#55586c"/>
+  <ellipse cx="256" cy="198" rx="138" ry="21" fill="#e4532b"/>
+  <ellipse cx="222" cy="192" rx="46" ry="7" fill="#f4a83a" opacity=".85"/>
+  <ellipse cx="300" cy="202" rx="22" ry="4" fill="#f4a83a" opacity=".6"/>
+  <g stroke="#f0e7d3" stroke-width="16" fill="none" stroke-linecap="round">
+    <path d="M196 150 q-18 -26 0 -52 q18 -26 0 -52"/>
+    <path d="M256 140 q-18 -26 0 -52 q18 -26 0 -52"/>
+    <path d="M316 150 q-18 -26 0 -52 q18 -26 0 -52"/>
+  </g>
+</svg>

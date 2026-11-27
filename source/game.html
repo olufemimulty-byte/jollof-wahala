@@ -1,0 +1,1418 @@
+<title>Jollof Wahala</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap">
+<style>
+/* Layout: adire-indigo night market; pot on the fire at left, word board + keyboard at right; stacks on phones. Single committed dark world. */
+:root {
+  color-scheme: dark;
+  --night: #111733;
+  --indigo: #1d2860;
+  --indigo-2: #2a3884;
+  --cloth: #f0e7d3;
+  --cloth-edge: #c8b78f;
+  --cloth-ink: #1a1f3d;
+  --jollof: #e4532b;
+  --palm: #f4a83a;
+  --leaf: #3cb47c;
+  --text: #f4efe4;
+  --muted: #a8b0d8;
+  --display: "Lilita One", "Arial Black", Impact, sans-serif;
+  --body: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+}
+html, body { height: 100%; }
+body {
+  background-color: var(--night);
+  background-image:
+    radial-gradient(circle at 20px 20px, rgba(120,140,230,.10) 0 5px, transparent 6px),
+    radial-gradient(circle at 60px 60px, rgba(120,140,230,.07) 0 2px, transparent 3px),
+    repeating-linear-gradient(45deg, rgba(120,140,230,.04) 0 2px, transparent 2px 40px),
+    repeating-linear-gradient(-45deg, rgba(120,140,230,.04) 0 2px, transparent 2px 40px);
+  background-size: 80px 80px, 80px 80px, auto, auto;
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.5;
+}
+.wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding-block: 20px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 18px;
+}
+header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px 24px; }
+h1 {
+  font-family: var(--display); font-weight: 400; margin: 0;
+  font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: .95; letter-spacing: .01em;
+  color: var(--palm);
+  text-shadow: 3px 3px 0 var(--jollof), 6px 6px 0 rgba(0,0,0,.35);
+}
+.tag { margin: 6px 0 0; color: var(--muted); font-size: .95rem; }
+.stats { display: flex; flex-wrap: wrap; gap: 8px; }
+.stat {
+  background: rgba(255,255,255,.05); border: 1px solid rgba(168,176,216,.18);
+  border-radius: 10px; padding: 6px 12px; min-width: 76px;
+}
+.stat b { display: block; font-family: var(--display); font-weight: 400; font-size: 1.35rem; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.stat span { font-size: .68rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+.voice { cursor: pointer; font: inherit; color: var(--text); text-align: left; }
+.voice:hover { border-color: var(--palm); }
+.voice[aria-pressed="false"] b { color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.chips .lbl { font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-right: 4px; }
+.chip {
+  font: 600 .88rem var(--body); color: var(--text); cursor: pointer;
+  background: transparent; border: 1.5px solid rgba(168,176,216,.35); border-radius: 999px; padding: 5px 13px;
+}
+.chip:hover { border-color: var(--palm); }
+.chip[aria-pressed="true"] { background: var(--palm); color: var(--cloth-ink); border-color: var(--palm); }
+.left { margin: -8px 0 0; font-size: .82rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.game { display: grid; grid-template-columns: minmax(250px, 330px) 1fr; gap: 18px; align-items: start; }
+@media (max-width: 760px) { .game { grid-template-columns: 1fr; } }
+
+.scene {
+  background: linear-gradient(180deg, var(--indigo) 0%, #151d48 100%);
+  border: 1px solid rgba(168,176,216,.18); border-radius: 18px;
+  padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 10px; align-items: center;
+}
+.scene svg { width: 100%; max-width: 300px; height: auto; display: block; }
+.heat { display: flex; align-items: center; gap: 10px; font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+.pips { display: flex; gap: 5px; }
+.pip { width: 18px; height: 10px; border-radius: 3px; background: rgba(168,176,216,.2); transition: background .25s; }
+.pip.on { background: var(--jollof); box-shadow: 0 0 8px rgba(228,83,43,.7); }
+.mama {
+  font: 700 .92rem var(--body); cursor: pointer; width: 100%;
+  background: transparent; color: var(--palm); border: 1.5px dashed var(--palm); border-radius: 10px; padding: 8px 12px;
+}
+.mama:hover:not(:disabled) { background: rgba(244,168,58,.1); }
+.mama:disabled { opacity: .4; cursor: not-allowed; }
+.mama small { display: block; font-weight: 400; color: var(--muted); font-size: .75rem; }
+
+.play {
+  background: rgba(17,23,51,.75); border: 1px solid rgba(168,176,216,.18); border-radius: 18px;
+  padding: 18px clamp(12px, 3vw, 26px) 20px; display: flex; flex-direction: column; gap: 16px; min-width: 0;
+}
+.cat { font-size: .74rem; text-transform: uppercase; letter-spacing: .14em; color: var(--palm); font-weight: 800; }
+.clue { margin: 2px 0 0; font-size: 1.05rem; color: var(--text); max-width: 60ch; }
+/* --n is the longest word's length, so tiles shrink until that word fits on one line */
+.board { container-type: inline-size; display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 22px; padding-block: 6px; min-height: 64px; --n: 8; }
+.word { display: flex; gap: 4px; }
+.tile {
+  --tw: min(40px, calc((100cqi - (var(--n) - 1) * 4px) / var(--n)));
+  width: var(--tw); height: calc(var(--tw) * 1.3);
+  display: grid; place-items: center;
+  background: var(--cloth); color: var(--cloth-ink);
+  border-radius: 6px; border-bottom: 4px solid var(--cloth-edge);
+  font-family: var(--display); font-size: calc(var(--tw) * .68);
+}
+.tile.show { animation: flip .35s ease-out; }
+.tile.missed { color: var(--jollof); }
+.tile.punct { background: transparent; border-color: transparent; color: var(--text); width: auto; min-width: 12px; }
+@keyframes flip { from { transform: rotateX(90deg); } to { transform: rotateX(0); } }
+
+.msg { min-height: 2.2em; text-align: center; font-family: var(--display); font-size: clamp(1.2rem, 3.5vw, 1.6rem); letter-spacing: .02em; }
+.msg.good { color: var(--leaf); } .msg.bad { color: var(--jollof); } .msg.big { color: var(--palm); }
+.msg small { display: block; font-family: var(--body); font-size: .85rem; color: var(--muted); letter-spacing: 0; }
+
+.keys { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+.row { display: flex; gap: 5px; justify-content: center; }
+.key {
+  width: clamp(27px, 8vw, 44px); height: 46px; cursor: pointer;
+  font: 400 1.15rem var(--display); color: var(--cloth-ink);
+  background: var(--cloth); border: none; border-bottom: 3px solid var(--cloth-edge); border-radius: 7px;
+  transition: transform .08s;
+}
+.key:hover:not(:disabled) { transform: translateY(-2px); }
+.key:active:not(:disabled) { transform: translateY(1px); }
+.key.hit { background: var(--leaf); border-color: #24805a; color: #fff; }
+.key.miss { background: rgba(168,176,216,.15); border-color: transparent; color: rgba(244,239,228,.35); text-decoration: line-through; }
+.key:disabled { cursor: default; }
+button:focus-visible { outline: 3px solid var(--palm); outline-offset: 2px; }
+
+.next {
+  align-self: center; font: 400 1.2rem var(--display); letter-spacing: .03em; cursor: pointer;
+  background: var(--jollof); color: #fff; border: none; border-radius: 12px; padding: 12px 28px;
+  border-bottom: 4px solid #a83417;
+}
+.next:hover { filter: brightness(1.08); }
+
+.how { color: var(--muted); font-size: .85rem; max-width: 70ch; margin: 0; }
+.how b { color: var(--text); font-weight: 600; }
+
+/* pot scene */
+.fire { transform-box: fill-box; transform-origin: 50% 100%; transition: transform .45s cubic-bezier(.3,1.6,.5,1); }
+.flicker { transform-box: fill-box; transform-origin: 50% 100%; animation: flick .5s ease-in-out infinite alternate; }
+@keyframes flick { from { transform: scale(1, 1); } to { transform: scale(.94, 1.07); } }
+.lid { transition: transform .5s cubic-bezier(.3,1.6,.5,1); transform-box: fill-box; transform-origin: 50% 100%; }
+.won .lid { transform: translate(18px, -26px) rotate(14deg); }
+.lost .lid { transform: translate(-22px, -40px) rotate(-24deg); }
+.smoke circle { transition: opacity .4s; }
+.drift { animation: drift 2.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.drift:nth-child(2) { animation-delay: .8s; } .drift:nth-child(3) { animation-delay: 1.6s; }
+@keyframes drift { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(6px,-8px) scale(1.12); } }
+.steam { opacity: 0; transition: opacity .4s; }
+.won .steam { opacity: 1; }
+.steam path { animation: rise 1.6s ease-in-out infinite; }
+.steam path:nth-child(2) { animation-delay: .5s; } .steam path:nth-child(3) { animation-delay: 1s; }
+@keyframes rise { 0% { transform: translateY(6px); opacity: 0; } 40% { opacity: .9; } 100% { transform: translateY(-14px); opacity: 0; } }
+.shake { animation: shake .35s; }
+@keyframes shake { 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
+.overlay {
+  position: fixed; inset: 0; z-index: 20; display: grid; place-items: center;
+  background: rgba(8,11,28,.78); padding: 16px;
+}
+.card {
+  background: var(--indigo); border: 1px solid rgba(168,176,216,.25); border-radius: 20px;
+  padding: 26px 24px; max-width: 420px; width: 100%; text-align: center; display: flex; flex-direction: column; gap: 12px;
+}
+.card h2 { font-family: var(--display); font-weight: 400; color: var(--palm); font-size: 2rem; margin: 0; line-height: 1.05; text-wrap: balance; }
+.card .final { font-family: var(--display); font-size: 3.4rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.card p { margin: 0; color: var(--muted); }
+.card ul { list-style: none; padding: 0; margin: 0; text-align: left; display: flex; flex-direction: column; gap: 4px; font-size: .9rem; }
+.card li { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px dashed rgba(168,176,216,.2); padding-bottom: 4px; }
+.card li .r-ok { color: var(--leaf); } .card li .r-no { color: var(--jollof); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Jollof Wahala</h1>
+      <p class="tag">Guess the Naija word before the pot burns. Five pots per party.</p>
+    </div>
+    <div class="stats" aria-label="Scoreboard">
+      <div class="stat"><b id="score">0</b><span>Score</span></div>
+      <div class="stat"><b id="round">1/5</b><span>Pot</span></div>
+      <div class="stat"><b id="streak">x1</b><span>Streak</span></div>
+      <div class="stat"><b id="best">0</b><span>Best</span></div>
+      <button class="stat voice" id="voice" type="button" aria-pressed="true" aria-label="Spoken reactions"><b>On</b><span>Voice</span></button>
+    </div>
+  </header>
+
+  <div class="chips" id="chips" role="group" aria-label="Category">
+    <span class="lbl">New party:</span>
+  </div>
+  <p class="left" id="left"></p>
+
+  <div class="game">
+    <section class="scene" aria-label="The pot">
+      <svg id="pot" viewBox="0 0 300 280" role="img" aria-label="Pot of jollof on a firewood stove">
+        <ellipse cx="150" cy="264" rx="122" ry="10" fill="#0a0f26"/>
+        <rect x="78" y="242" width="144" height="13" rx="6" fill="#6b3d22" transform="rotate(-7 150 248)"/>
+        <rect x="78" y="242" width="144" height="13" rx="6" fill="#80492a" transform="rotate(7 150 248)"/>
+        <g class="fire" id="fire">
+          <g class="flicker">
+            <path d="M150 252 C105 232 112 192 132 172 C130 197 142 202 146 198 C138 172 150 142 170 127 C166 157 190 172 192 202 C196 230 180 248 150 252Z" fill="#e4532b"/>
+            <path d="M150 252 C125 242 126 216 140 202 C142 216 150 218 152 214 C150 198 158 184 168 177 C168 197 180 212 178 230 C176 244 166 252 150 252Z" fill="#f4a83a"/>
+            <path d="M150 252 C138 248 136 234 144 224 C148 234 154 232 156 226 C162 234 164 246 150 252Z" fill="#ffe08a"/>
+          </g>
+        </g>
+        <rect x="58" y="196" width="40" height="58" rx="14" fill="#575c74"/>
+        <rect x="202" y="196" width="40" height="58" rx="14" fill="#4c5168"/>
+        <rect x="64" y="200" width="14" height="22" rx="6" fill="#6c7290"/>
+        <ellipse id="glow" cx="150" cy="200" rx="70" ry="10" fill="#e4532b" opacity="0"/>
+        <rect x="52" y="116" width="20" height="10" rx="5" fill="#2b2c38"/>
+        <rect x="228" y="116" width="20" height="10" rx="5" fill="#2b2c38"/>
+        <path id="potbody" d="M68 112 Q66 204 150 204 Q234 204 232 112 Z" fill="#33343f"/>
+        <path d="M84 126 Q86 180 120 192" stroke="rgba(255,255,255,.12)" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <ellipse cx="150" cy="112" rx="84" ry="14" fill="#41424f"/>
+        <ellipse id="food" cx="150" cy="112" rx="74" ry="9" fill="#e4532b"/>
+        <g class="lid">
+          <ellipse cx="150" cy="106" rx="80" ry="12" fill="#4a4c5e"/>
+          <ellipse cx="150" cy="103" rx="66" ry="8" fill="#555870"/>
+          <ellipse cx="150" cy="93" rx="13" ry="6" fill="#2b2c38"/>
+          <rect x="146" y="93" width="8" height="8" fill="#2b2c38"/>
+        </g>
+        <g class="steam" stroke="#f0e7d3" stroke-width="4" fill="none" stroke-linecap="round">
+          <path d="M120 82 q-8 -12 0 -24 q8 -12 0 -24"/>
+          <path d="M150 76 q-8 -12 0 -24 q8 -12 0 -24"/>
+          <path d="M180 82 q-8 -12 0 -24 q8 -12 0 -24"/>
+        </g>
+        <g class="smoke" id="smoke">
+          <circle class="drift" cx="132" cy="70" r="16" fill="#7c8099" opacity="0"/>
+          <circle class="drift" cx="160" cy="46" r="20" fill="#6a6e88" opacity="0"/>
+          <circle class="drift" cx="140" cy="20" r="18" fill="#5a5e78" opacity="0"/>
+        </g>
+      </svg>
+      <div class="heat"><span>Heat</span><div class="pips" id="pips"></div></div>
+      <button class="mama" id="mama" type="button">Ask Mama Put<small>Shows one letter, but the fire goes up</small></button>
+    </section>
+
+    <section class="play" aria-label="Puzzle">
+      <div>
+        <div class="cat" id="cat">Chop</div>
+        <p class="clue" id="clue"></p>
+      </div>
+      <div class="board" id="board" aria-live="polite"></div>
+      <div class="msg" id="msg" aria-live="polite"></div>
+      <div class="keys" id="keys"></div>
+      <button class="next" id="next" type="button" hidden>Next pot</button>
+      <p class="how"><b>How to play:</b> tap letters or type on your keyboard. Every wrong letter raises the fire. Six wrong and the pot burns. Each right letter is 10 points; finishing a pot pays a bonus for the heat you saved, and back-to-back finished pots grow your streak multiplier. Puzzles don't repeat until you've played every one in a category.</p>
+    </section>
+  </div>
+</div>
+
+<div class="overlay" id="overlay" hidden>
+  <div class="card" role="dialog" aria-modal="true" aria-labelledby="ovTitle">
+    <h2 id="ovTitle">Party over!</h2>
+    <div class="final" id="ovScore">0</div>
+    <p id="ovNote"></p>
+    <ul id="ovList"></ul>
+    <button class="next" id="again" type="button">Start another party</button>
+  </div>
+</div>
+
+<script>
+const CATS = {"all":"Everything","chop":"Chop","places":"Places","pidgin":"Pidgin & Slang","culture":"Culture & Owambe","proverbs":"Proverbs","music":"Music","musicians":"Musicians","actors":"Actors & Nollywood","football":"Football","footballers":"Footballers","history":"History & Heroes","books":"Books & Writers","languages":"Naija Languages","festivals":"Festivals & Traditions"};
+const PUZZLES = [
+  ["chop","JOLLOF RICE","Party rice cooked in tomato and pepper stew"],
+  ["chop","POUNDED YAM","Swallow made by beating boiled yam in a mortar"],
+  ["chop","EGUSI SOUP","Soup thickened with ground melon seeds"],
+  ["chop","SUYA","Spicy grilled beef on sticks, sold at night"],
+  ["chop","PUFF PUFF","Sweet fried dough balls"],
+  ["chop","AKARA","Fried bean cakes, best with pap or bread"],
+  ["chop","MOI MOI","Steamed bean pudding, sometimes with egg inside"],
+  ["chop","DODO","Fried ripe plantain"],
+  ["chop","OFADA RICE","Local rice served with ayamase stew"],
+  ["chop","EFO RIRO","Rich Yoruba vegetable soup"],
+  ["chop","PEPPER SOUP","Hot, spicy broth with goat meat or catfish"],
+  ["chop","CHIN CHIN","Crunchy fried snack, a Christmas favourite"],
+  ["chop","NKWOBI","Spicy cow foot in palm oil paste"],
+  ["chop","BOLE","Roasted plantain, a Port Harcourt classic"],
+  ["chop","ABACHA","Igbo cassava salad, also called African salad"],
+  ["chop","AMALA","Dark swallow made from yam flour"],
+  ["chop","TUWO SHINKAFA","Soft rice swallow from the North"],
+  ["chop","ZOBO","Red drink made from hibiscus leaves"],
+  ["chop","KILISHI","Thin dried spiced meat from the North"],
+  ["chop","OGBONO SOUP","Draw soup made from wild mango seeds"],
+  ["chop","BANGA SOUP","Palm fruit soup from the Niger Delta"],
+  ["chop","EDIKANG IKONG","Rich vegetable soup from Akwa Ibom"],
+  ["chop","ASUN","Spicy roasted goat meat"],
+  ["chop","FRIED RICE","Party rice cooked with liver, carrots and green beans"],
+  ["chop","COCONUT RICE","Rice cooked in coconut milk"],
+  ["chop","ROASTED CORN","Roadside snack often eaten with ube"],
+  ["chop","UBE","Purple pear eaten with roasted corn"],
+  ["chop","GARRI","Cassava granules you can soak with sugar or turn into eba"],
+  ["chop","EBA","Swallow made by stirring garri into hot water"],
+  ["chop","FUFU","Fermented cassava swallow"],
+  ["chop","SEMOVITA","Popular wheat semolina swallow"],
+  ["chop","STARCH","Smooth swallow from the Niger Delta, eaten with banga"],
+  ["chop","OWHO SOUP","Urhobo soup thickened with palm oil and potash"],
+  ["chop","AFANG SOUP","Efik and Ibibio soup of afang leaves and waterleaf"],
+  ["chop","OHA SOUP","Igbo soup made with tender oha leaves"],
+  ["chop","BITTERLEAF SOUP","Igbo soup known as ofe onugbu"],
+  ["chop","GBEGIRI","Yoruba bean soup served with ewedu and amala"],
+  ["chop","EWEDU","Slimy jute leaf soup"],
+  ["chop","ABULA","Amala served with gbegiri and ewedu together"],
+  ["chop","OFE NSALA","Igbo white soup cooked without palm oil"],
+  ["chop","FISHERMAN SOUP","Seafood soup from the Niger Delta"],
+  ["chop","DANWAKE","Hausa dumplings made from bean flour"],
+  ["chop","MIYAN KUKA","Hausa soup made from baobab leaves"],
+  ["chop","FURA DA NONO","Millet balls mixed into fermented milk"],
+  ["chop","KUNU","Northern drink made from millet or sorghum"],
+  ["chop","MASA","Northern rice cakes, also called waina"],
+  ["chop","KOSAI","Hausa name for bean fritters"],
+  ["chop","PAP","Fermented corn porridge, also called ogi or akamu"],
+  ["chop","AGIDI","Corn starch pudding wrapped in leaves, also called eko"],
+  ["chop","EKURU","White bean pudding made without pepper or oil"],
+  ["chop","ISI EWU","Spicy goat head delicacy"],
+  ["chop","PLANTAIN PORRIDGE","Plantain cooked down with palm oil and vegetables"],
+  ["chop","ASARO","Yoruba name for yam porridge"],
+  ["chop","EWA AGOYIN","Mashed beans served with a dark pepper sauce"],
+  ["chop","MEAT PIE","Pastry filled with minced meat and potatoes"],
+  ["chop","SCOTCH EGG","Boiled egg wrapped in sausage meat and fried"],
+  ["chop","SAUSAGE ROLL","Pastry wrapped around a sausage filling"],
+  ["chop","BUNS","Dense fried dough snack, crunchier than puff puff"],
+  ["chop","PLANTAIN CHIPS","Crunchy snack sold to drivers in traffic"],
+  ["chop","KULI KULI","Crunchy snack made from groundnut paste"],
+  ["chop","GROUNDNUT","What Nigerians call peanuts"],
+  ["chop","TIGER NUT","Called aya in Hausa, used to make a milky drink"],
+  ["chop","CHAPMAN","Fruity red mocktail served at parties"],
+  ["chop","PALM WINE","Sap tapped from palm trees"],
+  ["chop","BURUKUTU","Fermented sorghum drink"],
+  ["chop","OGOGORO","Strong local gin"],
+  ["chop","OKRO SOUP","Draw soup made with chopped okra"],
+  ["chop","GIZDODO","Gizzard and plantain in pepper sauce"],
+  ["chop","AYAMASE","Green pepper sauce known as designer stew"],
+  ["chop","SHAKI","Cow tripe"],
+  ["chop","PONMO","Cow skin"],
+  ["chop","STOCKFISH","Dried cod used in many soups"],
+  ["chop","CRAYFISH","Ground dried shrimp that flavours soup"],
+  ["chop","UZIZA","Peppery leaf used in Igbo soups"],
+  ["chop","UGWU","Fluted pumpkin leaf"],
+  ["chop","YAJI","Spicy groundnut mix rubbed on suya"],
+  ["chop","OKPA","Bambara nut pudding from Enugu"],
+  ["chop","EKPANG NKUKWO","Cocoyam and leaf dish from Calabar"],
+  ["chop","SINASIR","Hausa rice pancake"],
+  ["places","LAGOS","Centre of Excellence, and of traffic"],
+  ["places","ABUJA","The Federal Capital Territory"],
+  ["places","KANO","Ancient city famous for its dye pits"],
+  ["places","IBADAN","City of rusty brown roofs"],
+  ["places","PORT HARCOURT","The Garden City"],
+  ["places","ENUGU","The Coal City"],
+  ["places","CALABAR","Hosts a famous December street carnival"],
+  ["places","JOS","Plateau city known for cool weather"],
+  ["places","ABEOKUTA","City under Olumo Rock"],
+  ["places","BENIN CITY","Ancient kingdom known for its bronzes"],
+  ["places","OWERRI","Imo State capital, famous for enjoyment"],
+  ["places","MAIDUGURI","Borno State capital"],
+  ["places","SOKOTO","Seat of the old Caliphate"],
+  ["places","ONITSHA","Home of a giant market on the River Niger"],
+  ["places","OSOGBO","Home of the Osun sacred grove"],
+  ["places","ZUMA ROCK","Giant rock near Abuja"],
+  ["places","OBUDU","Cattle ranch resort on a Cross River mountain"],
+  ["places","YANKARI","Game reserve with warm springs in Bauchi"],
+  ["places","LEKKI","Lagos peninsula of estates and a toll gate"],
+  ["places","KADUNA","Former capital of the old Northern Region"],
+  ["places","ZARIA","Home of Ahmadu Bello University"],
+  ["places","ILORIN","Kwara State capital"],
+  ["places","AKURE","Ondo State capital"],
+  ["places","ADO EKITI","Ekiti State capital"],
+  ["places","UYO","Akwa Ibom State capital"],
+  ["places","ASABA","Delta State capital on the River Niger"],
+  ["places","WARRI","Oil city in Delta State, famous for quick-witted people"],
+  ["places","AWKA","Anambra State capital"],
+  ["places","UMUAHIA","Abia State capital"],
+  ["places","ABA","Commercial city famous for Made in Aba goods"],
+  ["places","ABAKALIKI","Ebonyi State capital"],
+  ["places","MAKURDI","Benue State capital, in the Food Basket of the Nation"],
+  ["places","LAFIA","Nasarawa State capital"],
+  ["places","LOKOJA","Kogi city where the Niger and Benue rivers meet"],
+  ["places","MINNA","Niger State capital"],
+  ["places","BAUCHI","State whose capital is near Yankari Game Reserve"],
+  ["places","GOMBE","Gombe State capital"],
+  ["places","YOLA","Adamawa State capital"],
+  ["places","JALINGO","Taraba State capital"],
+  ["places","DAMATURU","Yobe State capital"],
+  ["places","DUTSE","Jigawa State capital"],
+  ["places","KATSINA","Ancient Hausa city and state capital"],
+  ["places","BIRNIN KEBBI","Kebbi State capital"],
+  ["places","GUSAU","Zamfara State capital"],
+  ["places","YENAGOA","Bayelsa State capital"],
+  ["places","IKEJA","Lagos State capital"],
+  ["places","IKOYI","Upscale neighbourhood on Lagos Island"],
+  ["places","VICTORIA ISLAND","Lagos business district called VI"],
+  ["places","SURULERE","Lagos area home to the National Stadium"],
+  ["places","YABA","Lagos tech hub nicknamed Yabacon Valley"],
+  ["places","IKORODU","Large town on the edge of Lagos"],
+  ["places","BADAGRY","Coastal town with relics of the slave trade"],
+  ["places","EPE","Lagos town famous for its fish market"],
+  ["places","IDANRE","Ondo town famous for its hills and long staircase"],
+  ["places","ILE IFE","Spiritual home of the Yoruba"],
+  ["places","OYO","Seat of the Alaafin and an old Yoruba empire"],
+  ["places","OGBOMOSHO","Oyo town, home of LAUTECH"],
+  ["places","IJEBU ODE","Town that hosts the Ojude Oba festival"],
+  ["places","NSUKKA","Home of the University of Nigeria"],
+  ["places","BONNY ISLAND","Island where Nigeria LNG processes gas"],
+  ["places","ERIN IJESHA","Osun town with a waterfall called Olumirin"],
+  ["places","GURARA FALLS","Waterfall in Niger State"],
+  ["places","KAINJI DAM","Large hydroelectric dam on the River Niger"],
+  ["places","ASO ROCK","Rock behind the Presidential Villa in Abuja"],
+  ["places","OLUMO ROCK","Abeokuta rock that once sheltered the Egba people"],
+  ["places","MAMBILLA PLATEAU","Cool high plateau in Taraba State"],
+  ["places","CHAPPAL WADDI","Nigeria's highest mountain"],
+  ["places","TINAPA","Business and leisure resort in Calabar"],
+  ["places","KOFAR MATA","Ancient dye pits in Kano"],
+  ["places","RIVER NIGER","The great river that gave Nigeria its name"],
+  ["places","RIVER BENUE","Main tributary of the Niger"],
+  ["places","LAKE CHAD","Shrinking lake in the far north-east"],
+  ["places","NIGER DELTA","Oil-rich region where the river meets the sea"],
+  ["places","THIRD MAINLAND BRIDGE","Long Lagos bridge across the lagoon"],
+  ["pidgin","NO WAHALA","No problem"],
+  ["pidgin","HOW FAR","Casual greeting: how are you?"],
+  ["pidgin","ABEG","Please"],
+  ["pidgin","WETIN DEY HAPPEN","What is going on?"],
+  ["pidgin","I NO FIT SHOUT","Not my business, I can't be bothered"],
+  ["pidgin","E DON CAST","The secret is out, it has gone wrong"],
+  ["pidgin","JAPA","To relocate abroad"],
+  ["pidgin","SHAKARA","Showing off, forming"],
+  ["pidgin","GBAS GBOS","An exchange of blows"],
+  ["pidgin","SAPA","Being completely broke"],
+  ["pidgin","WAKA PASS","Walked past without stopping"],
+  ["pidgin","K-LEG","Something is not right here"],
+  ["pidgin","NA SO","That's how it is"],
+  ["pidgin","I DEY KAMPE","I am fine and strong"],
+  ["pidgin","CHOP LIFE","Enjoy yourself"],
+  ["pidgin","WAHALA DEY","There is trouble"],
+  ["pidgin","WETIN","What"],
+  ["pidgin","WAHALA","Trouble"],
+  ["pidgin","PIKIN","Child"],
+  ["pidgin","OYINBO","White person or foreigner"],
+  ["pidgin","SABI","To know how"],
+  ["pidgin","GIST","Gossip or news"],
+  ["pidgin","YARN","To talk"],
+  ["pidgin","CHOP","To eat"],
+  ["pidgin","GBEGE","Big trouble"],
+  ["pidgin","KOLO","Crazy, also a money box"],
+  ["pidgin","JOR","Added for emphasis, like please"],
+  ["pidgin","OGA","Boss"],
+  ["pidgin","MADAM","Female boss"],
+  ["pidgin","FINE BOY","Handsome young man"],
+  ["pidgin","FINE GIRL","Pretty young woman"],
+  ["pidgin","OYA","Come on, let's go"],
+  ["pidgin","SHARP SHARP","Quickly"],
+  ["pidgin","SMALL SMALL","Little by little"],
+  ["pidgin","DEY PLAY","You must be joking"],
+  ["pidgin","NO VEX","Don't be angry, sorry"],
+  ["pidgin","I DON TIRE","I'm fed up"],
+  ["pidgin","WETIN DEY","What's up?"],
+  ["pidgin","COMOT","Get out, go away"],
+  ["pidgin","WAKA","Walk"],
+  ["pidgin","KPATAKPATA","Completely, totally"],
+  ["pidgin","SHEY","Question word, like is it?"],
+  ["pidgin","ABI","Isn't it?"],
+  ["pidgin","NAWA O","Wow, this is something else"],
+  ["pidgin","OMO","Exclamation of surprise"],
+  ["pidgin","CHAI","Cry of shock or pity"],
+  ["pidgin","HABA","Come on, that's too much"],
+  ["pidgin","GBAM","Exactly, spot on"],
+  ["pidgin","ODOGWU","Strong man, champion"],
+  ["pidgin","LEPA","Slim, skinny"],
+  ["pidgin","FOLLOW COME","Tag along"],
+  ["pidgin","CARRY GO","Go ahead"],
+  ["pidgin","SHIFT","Move over"],
+  ["pidgin","OGBONGE","Original, top quality"],
+  ["pidgin","BADT","Really cool, impressive"],
+  ["pidgin","YAWA","A disgraceful situation"],
+  ["pidgin","YAWA DON GAS","Things have gone really bad"],
+  ["pidgin","ENJOYMENT MINISTER","Life of the party"],
+  ["pidgin","ORISHIRISHI","All sorts of nonsense"],
+  ["pidgin","FALL MY HAND","You let me down"],
+  ["pidgin","GO SLOW","Traffic jam"],
+  ["pidgin","LONG THROAT","Greedy"],
+  ["pidgin","EMI LOKAN","It's my turn"],
+  ["pidgin","NAIJA","Nigeria, the street way"],
+  ["pidgin","UNA","You, when talking to many people"],
+  ["pidgin","DEM","Them"],
+  ["pidgin","MUMU","Fool"],
+  ["pidgin","PALAVA","Trouble, a quarrel"],
+  ["culture","ASO EBI","Matching fabric worn by a party group"],
+  ["culture","GELE","Big, sculpted head tie"],
+  ["culture","AGBADA","Flowing wide-sleeved robe for men"],
+  ["culture","OWAMBE","A big Yoruba party"],
+  ["culture","DANFO","Yellow Lagos commuter bus"],
+  ["culture","OKADA","Motorcycle taxi"],
+  ["culture","KEKE NAPEP","Three-wheeler taxi"],
+  ["culture","MAMA PUT","Roadside food seller"],
+  ["culture","AGEGE BREAD","Soft, dense Lagos bread"],
+  ["culture","NOLLYWOOD","Nigeria's film industry"],
+  ["culture","ADIRE","Indigo tie-dye cloth from Abeokuta"],
+  ["culture","ANKARA","Bold wax-print fabric"],
+  ["culture","TALKING DRUM","Drum whose pitch copies speech"],
+  ["culture","SPRAYING MONEY","Showering cash on dancers at a party"],
+  ["culture","NEPA TAKE LIGHT","What everyone shouts at a power cut"],
+  ["culture","I PASS MY NEIGHBOUR","Nickname for a small generator"],
+  ["culture","AJEBUTTER","Someone raised soft and comfortable"],
+  ["culture","ASO OKE","Hand-woven Yoruba cloth for big occasions"],
+  ["culture","AKWETE","Hand-woven cloth from Abia State"],
+  ["culture","GEORGE WRAPPER","Rich fabric loved in the Niger Delta and Igbo land"],
+  ["culture","ISIAGU","Igbo top with lion head patterns"],
+  ["culture","KAFTAN","Long, simple tunic for men"],
+  ["culture","BUBA","Loose Yoruba blouse or top"],
+  ["culture","FILA","Yoruba cap"],
+  ["culture","ABETI AJA","Yoruba cap with flaps like a dog's ears"],
+  ["culture","RED CAP","Cap worn by Igbo chiefs"],
+  ["culture","CORAL BEADS","Beads worn by Edo royalty and brides"],
+  ["culture","KOLA NUT","Nut broken to welcome guests"],
+  ["culture","IGBA NKWU","Igbo traditional wedding where the bride finds her groom"],
+  ["culture","BRIDE PRICE","Payment made to the bride's family"],
+  ["culture","NAMING CEREMONY","Celebration held a few days after a baby is born"],
+  ["culture","SMALL CHOPS","Party finger food like samosa and puff puff"],
+  ["culture","SOUVENIR","Gift guests collect after a party"],
+  ["culture","CANOPY","Tent hired for parties"],
+  ["culture","MAI SUYA","Suya seller"],
+  ["culture","MALLAM","Title for a learned man or teacher"],
+  ["culture","MAI SHAYI","Roadside tea and bread seller"],
+  ["culture","AGBERO","Motor park tout"],
+  ["culture","CONDUCTOR","Bus attendant who shouts out destinations"],
+  ["culture","MOLUE","Old big yellow Lagos bus"],
+  ["culture","BRT","Lagos rapid transit bus"],
+  ["culture","TOKUNBO","Imported used car"],
+  ["culture","JAND","London, or the UK"],
+  ["culture","OBODO OYIBO","Abroad, the white man's land"],
+  ["culture","BUKA","Local canteen"],
+  ["culture","GENERATOR","Machine almost every house needs because of power cuts"],
+  ["culture","POS","Roadside cash agent"],
+  ["culture","SUNDAY RICE","Rice every family cooks on Sunday"],
+  ["culture","WHITE GARMENT","Nickname for churches where members wear white robes"],
+  ["culture","CRUSADE","Big open-air church gathering"],
+  ["culture","NYSC","National youth service year"],
+  ["culture","CORPER","Graduate doing national youth service"],
+  ["culture","JAMB","Exam for university entry"],
+  ["culture","WAEC","West African school leaving exam"],
+  ["culture","AUNTY","Title for any older woman"],
+  ["culture","DADDY G O","Nickname for a church's General Overseer"],
+  ["culture","OKRIKA","Second-hand clothes"],
+  ["culture","BEND DOWN SELECT","Second-hand market where you bend to pick"],
+  ["culture","OBA","Yoruba king"],
+  ["culture","OBI","Title of some Igbo kings, like Onitsha's"],
+  ["culture","EMIR","Hausa-Fulani ruler"],
+  ["culture","OONI","King of Ife"],
+  ["culture","ALAAFIN","King of Oyo"],
+  ["culture","IRO AND BUBA","Yoruba wrapper and blouse set"],
+  ["culture","WRAPPER","Cloth tied around the waist"],
+  ["culture","PARTY JOLLOF","Smoky rice cooked over firewood for events"],
+  ["culture","TRADITIONAL WEDDING","Ceremony held before the white wedding"],
+  ["culture","THANKSGIVING","Church service held to give thanks after a big event"],
+  ["proverbs","EVERY DAY FOR THIEF ONE DAY FOR OWNER","Wrongdoers get caught eventually"],
+  ["proverbs","MONKEY DEY WORK BABOON DEY CHOP","One person labours, another enjoys the reward"],
+  ["proverbs","WHEN TWO ELEPHANTS FIGHT THE GRASS SUFFERS","Ordinary people pay for the quarrels of the powerful"],
+  ["proverbs","DOG WEY GO LOST NO GO HEAR HUNTER WHISTLE","The doomed ignore every warning"],
+  ["proverbs","SHAME NO DEY KILL","Embarrassment won't kill you"],
+  ["proverbs","WHO GET EAR MAKE E HEAR","Let whoever has ears listen"],
+  ["proverbs","WHAT AN OLD MAN SEES SITTING A CHILD CANNOT SEE STANDING","Respect the wisdom of elders"],
+  ["proverbs","IT TAKES A VILLAGE TO RAISE A CHILD","Raising children is a community job"],
+  ["proverbs","HE WHO BRINGS KOLA BRINGS LIFE","A guest who brings kola brings goodwill"],
+  ["proverbs","ONE TREE CANNOT MAKE A FOREST","Unity is strength"],
+  ["proverbs","LOOK NOT WHERE YOU FELL BUT WHERE YOU SLIPPED","Find the real cause of a mistake"],
+  ["proverbs","THE FROG DOES NOT RUN IN THE DAYTIME FOR NOTHING","There is always a reason behind strange behaviour"],
+  ["proverbs","HOWEVER LONG THE NIGHT THE DAWN WILL BREAK","Hard times do not last forever"],
+  ["proverbs","IF YOU WANT TO GO FAST GO ALONE IF YOU WANT TO GO FAR GO TOGETHER","Teamwork takes you further"],
+  ["proverbs","A CHILD WHO WASHES HIS HANDS CAN EAT WITH ELDERS","Good conduct earns respect at any age"],
+  ["proverbs","WHEN A HANDSHAKE GOES BEYOND THE ELBOW IT HAS BECOME SOMETHING ELSE","Too much friendliness hides a motive"],
+  ["proverbs","LITTLE BY LITTLE THE BIRD BUILDS ITS NEST","Patience and steady effort pay off"],
+  ["proverbs","ONE WHO HAS BEEN BITTEN BY A SNAKE FEARS A LIZARD","Bad experiences make people cautious"],
+  ["proverbs","A RIVER THAT FORGETS ITS SOURCE WILL DRY UP","Never forget your roots"],
+  ["proverbs","NO MATTER HOW HOT YOUR ANGER IT CANNOT COOK YAM","Anger achieves nothing"],
+  ["proverbs","HE WHO ASKS QUESTIONS NEVER LOSES HIS WAY","Asking is the path to knowing"],
+  ["proverbs","PATIENCE CAN COOK A STONE","Patience can achieve the impossible"],
+  ["proverbs","THE HEN WITH CHICKS DOES NOT SWALLOW THE WORM","Parents sacrifice for their children"],
+  ["proverbs","UNTIL THE LION LEARNS TO WRITE EVERY STORY WILL GLORIFY THE HUNTER","Tell your own story"],
+  ["proverbs","A CHILD'S HAND CANNOT REACH THE SHELF","The young need the help of elders"],
+  ["proverbs","OKRO NO DEY GROW PASS IM MASTER","No one rises above their boss"],
+  ["proverbs","COCKROACH NO GET RIGHT FOR FOWL COURT","The weak get no justice among their enemies"],
+  ["proverbs","MONKEY NO FINE BUT IM MAMA LIKE AM","A mother loves her child no matter what"],
+  ["proverbs","THE TOAD LIKES WATER BUT NOT WHEN IT IS BOILING","Too much of a good thing is bad"],
+  ["proverbs","IF YOU CARRY THE EGG BASKET DO NOT DANCE","Be careful with fragile things"],
+  ["proverbs","A BIRD THAT FLIES OFF THE GROUND AND LANDS ON AN ANTHILL IS STILL ON THE GROUND","A small rise is no reason to boast"],
+  ["proverbs","RAIN DOES NOT FALL ON ONE ROOF ALONE","Trouble comes to everyone"],
+  ["proverbs","WHEN THE MUSIC CHANGES SO DOES THE DANCE","Adapt when things change"],
+  ["proverbs","THE RIGHT HAND WASHES THE LEFT AND THE LEFT WASHES THE RIGHT","People need each other"],
+  ["proverbs","THE CHILD WHO SAYS HIS MOTHER WILL NOT SLEEP WILL NOT SLEEP EITHER","Troublemakers suffer too"],
+  ["proverbs","TOMORROW BELONGS TO THOSE WHO PREPARE FOR IT TODAY","Plan ahead"],
+  ["proverbs","SPILLED WATER CANNOT BE GATHERED BACK","Some mistakes cannot be undone"],
+  ["proverbs","FIRE BEGETS ASH","Great parents can have ordinary children"],
+  ["proverbs","IT IS THE OWNER OF THE HOUSE WHO KNOWS WHERE THE ROOF LEAKS","Insiders know the real problems"],
+  ["proverbs","EVEN THE TONGUE AND THE TEETH QUARREL","Even close people disagree"],
+  ["proverbs","IF YOU CLIMB UP A TREE YOU MUST CLIMB DOWN THE SAME TREE","What goes up must come down"],
+  ["proverbs","THE CHILD YOU REFUSE TO TRAIN WILL SELL THE HOUSE YOU BUILT","Raise your children well"],
+  ["proverbs","LET THE KITE PERCH AND LET THE EAGLE PERCH","Live and let live"],
+  ["proverbs","ONLY A FOOL TESTS THE DEPTH OF THE WATER WITH BOTH FEET","Don't take reckless risks"],
+  ["proverbs","FOWL WEY FOLLOW DUCK GO DROWN","Bad company leads you to ruin"],
+  ["proverbs","A CHILD WHO IS NOT EMBRACED BY THE VILLAGE WILL BURN IT DOWN TO FEEL ITS WARMTH","Neglected young people can turn destructive"],
+  ["proverbs","WISDOM IS LIKE A BAOBAB TREE NO ONE PERSON CAN EMBRACE IT","Nobody knows everything"],
+  ["proverbs","IT IS THE SAME SUN THAT MELTS WAX AND HARDENS CLAY","The same event affects people differently"],
+  ["proverbs","THE CHICKEN THAT WILL BECOME A COCK IS SPOTTED THE DAY IT HATCHES","Greatness shows early"],
+  ["proverbs","ONLY WHEN YOU HAVE CROSSED THE RIVER CAN YOU INSULT THE CROCODILE","Don't provoke danger while you're still in it"],
+  ["proverbs","HE WHO IS BEING CARRIED DOES NOT REALISE HOW FAR THE TOWN IS","People who have it easy don't see the struggle"],
+  ["proverbs","IF YOU NO KNOW WHERE YOU DEY GO KNOW WHERE YOU COME FROM","Remember your origins"],
+  ["proverbs","HE WHO DIGS A PIT FOR OTHERS WILL FALL INTO IT","Evil plans come back on the planner"],
+  ["proverbs","NO CONDITION IS PERMANENT","Things will change, so don't give up"],
+  ["proverbs","THE PATIENT DOG EATS THE FATTEST BONE","Good things come to those who wait"],
+  ["proverbs","WHEN THE ROOTS OF A TREE DECAY IT SPREADS DEATH TO THE BRANCHES","A rotten foundation ruins everything"],
+  ["proverbs","AN EMPTY BAG CANNOT STAND UPRIGHT","A hungry person cannot work well"],
+  ["proverbs","WHERE THERE IS NO SHAME THERE IS NO HONOUR","Shame keeps people honest"],
+  ["music","AFROBEATS","Modern Nigerian pop sound that took over the world"],
+  ["music","AFROBEAT","Fela's fusion of jazz, funk and highlife"],
+  ["music","FUJI MUSIC","Percussion-heavy Yoruba music style"],
+  ["music","HIGHLIFE","Guitar-led West African dance music"],
+  ["music","JUJU MUSIC","Guitar and talking drum style made famous by King Sunny Ade"],
+  ["music","APALA","Yoruba percussion music with Islamic roots"],
+  ["music","AMAPIANO","South African sound that took over Naija parties"],
+  ["music","STREET POP","Raw, high-energy sound from the streets of Lagos"],
+  ["music","THE SHRINE","Fela's famous performance venue in Lagos"],
+  ["music","FELABRATION","Yearly festival celebrating Fela's life"],
+  ["music","SHEKERE","Gourd rattle covered in a net of beads"],
+  ["music","UDU","Clay pot drum from Igbo land"],
+  ["music","THE HEADIES","Nigeria's biggest music awards"],
+  ["music","ESSENCE","Wizkid and Tems hit that went global in 2021"],
+  ["music","LAST LAST","Burna Boy's 2022 heartbreak anthem"],
+  ["music","CALM DOWN","Rema's worldwide hit, remixed with Selena Gomez"],
+  ["music","AFRICAN GIANT","Burna Boy's 2019 album, also his nickname"],
+  ["music","MADE IN LAGOS","Wizkid's 2020 album"],
+  ["music","UNAVAILABLE","Davido's 2023 hit with Musa Keys"],
+  ["music","RUSH","Ayra Starr's 2022 breakout single"],
+  ["music","KU LO SA","Oxlade's 2022 hit"],
+  ["music","AFRICAN QUEEN","2Face Idibia's 2004 love song"],
+  ["music","YE","Burna Boy's 2018 hit"],
+  ["music","ON THE LOW","Burna Boy's 2018 love song"],
+  ["music","GBONA","Burna Boy's 2018 street anthem"],
+  ["music","CITY BOYS","Burna Boy's 2023 hit"],
+  ["music","TWICE AS TALL","Burna Boy's Grammy-winning album"],
+  ["music","OJUELEGBA","Wizkid hit named after a Lagos area"],
+  ["music","JOROMI","Simi's 2017 love song"],
+  ["music","COMMAS","Ayra Starr's 2024 hit"],
+  ["music","FIA","Davido's 2017 hit"],
+  ["music","AYE","Davido's 2014 love song"],
+  ["music","TIMELESS","Davido's 2023 album"],
+  ["music","A GOOD TIME","Davido's 2019 album"],
+  ["music","BUGA","Kizz Daniel's 2022 hit with Tekno"],
+  ["music","PERSONALLY","P-Square hit from 2012"],
+  ["music","DO ME","P-Square hit from 2007"],
+  ["music","JOHNNY","Yemi Alade's 2014 hit about a cheating lover"],
+  ["music","PANA","Tekno's 2016 hit"],
+  ["music","DURO","Tekno's 2015 hit"],
+  ["music","SKELEWU","Davido's 2013 dance song"],
+  ["music","SHAKU SHAKU","Street dance craze of 2017 and 2018"],
+  ["music","ZANKU","Leg dance made popular by Zlatan"],
+  ["music","AZONTO","Ghanaian dance that Nigerians loved too"],
+  ["music","TERMINATOR","Asake's 2022 hit"],
+  ["music","SUNGBA","Asake's 2022 hit, remixed with Burna Boy"],
+  ["music","PERU","Fireboy DML's 2021 hit"],
+  ["music","JEALOUS","Fireboy DML's 2019 hit"],
+  ["music","LOVE NWANTITI","CKay's love song that went viral on TikTok"],
+  ["music","DUMEBI","Rema's 2019 hit"],
+  ["music","IRON MAN","Rema's 2019 song"],
+  ["music","RAVE AND ROSES","Rema's 2022 debut album"],
+  ["music","FREE MIND","Tems' 2020 breakout song"],
+  ["music","HIGHER","Tems' 2021 song"],
+  ["music","WAIT FOR U","Song with Future and Drake that won Tems a Grammy"],
+  ["music","DANGOTE","Burna Boy's 2018 song named after a billionaire"],
+  ["music","WATER NO GET ENEMY","Fela's 1975 classic"],
+  ["music","ZOMBIE","Fela's 1976 song mocking soldiers"],
+  ["music","LADY","Fela's song about African women"],
+  ["music","SORROW TEARS AND BLOOD","Fela's 1977 protest song"],
+  ["music","SWEET MOTHER","Prince Nico Mbarga's classic song for mothers"],
+  ["music","OSONDI OWENDI","Osadebe's highlife classic"],
+  ["music","ONE LOVE","Onyeka Onwenu's song about unity"],
+  ["music","MAVIN","Don Jazzy's record label"],
+  ["music","YBNL","Olamide's record label"],
+  ["music","STARBOY","Wizkid's record label and nickname"],
+  ["music","DMW","Davido's record label"],
+  ["music","CHOCOLATE CITY","Abuja-based record label"],
+  ["music","KOKO MASTER","D'banj's nickname"],
+  ["music","OLIVER TWIST","D'banj's 2012 UK chart hit"],
+  ["music","FALL","Davido's 2017 slow-burn hit"],
+  ["music","KUKERE","Iyanya's 2012 dance hit"],
+  ["music","KONKO BELOW","Lagbaja's classic"],
+  ["music","GRAMMY","Award Burna Boy won in 2021"],
+  ["music","AFRONATION","Big Afrobeats festival in Portugal"],
+  ["musicians","FELA KUTI","Father of Afrobeat"],
+  ["musicians","BURNA BOY","Grammy winner who calls himself the African Giant"],
+  ["musicians","WIZKID","Starboy from Surulere"],
+  ["musicians","DAVIDO","OBO, Omo Baba Olowo"],
+  ["musicians","TIWA SAVAGE","Often called the Queen of Afrobeats"],
+  ["musicians","REMA","Calm Down singer from Benin City"],
+  ["musicians","TEMS","Grammy-winning singer featured on Essence"],
+  ["musicians","AYRA STARR","The Sabi Girl"],
+  ["musicians","ASAKE","Mr Money with the Vibe"],
+  ["musicians","KING SUNNY ADE","Juju music legend"],
+  ["musicians","EBENEZER OBEY","Juju legend known as the Chief Commander"],
+  ["musicians","ONYEKA ONWENU","The Elegant Stallion"],
+  ["musicians","OLAMIDE","Baddo, boss of YBNL"],
+  ["musicians","FLAVOUR","Highlife star behind the Ashawo remix"],
+  ["musicians","YEMI ALADE","Mama Africa, singer of Johnny"],
+  ["musicians","PHYNO","Rapper famous for rapping in Igbo"],
+  ["musicians","KIZZ DANIEL","Singer of the 2022 hit Buga"],
+  ["musicians","OLIVER DE COQUE","Igbo highlife guitar legend"],
+  ["musicians","ASA","Soulful singer of Jailer"],
+  ["musicians","P-SQUARE","Twin brothers behind Personally"],
+  ["musicians","FALZ","Rapper and actor behind This Is Nigeria"],
+  ["musicians","SIMI","Singer of Joromi"],
+  ["musicians","D'BANJ","Singer of Oliver Twist"],
+  ["musicians","DON JAZZY","Producer and boss of Mavin Records"],
+  ["musicians","FIREBOY DML","Singer of Peru"],
+  ["musicians","CKAY","Singer of Love Nwantiti"],
+  ["musicians","TEKNO","Singer of Pana"],
+  ["musicians","IYANYA","Singer of Kukere"],
+  ["musicians","LAGBAJA","Masked musician"],
+  ["musicians","SEUN KUTI","Fela's youngest son, leader of Egypt 80"],
+  ["musicians","FEMI KUTI","Fela's eldest son, Afrobeat star"],
+  ["musicians","INNOCENT IDIBIA","Real name of 2Baba"],
+  ["musicians","OSITA OSADEBE","Highlife legend behind Osondi Owendi"],
+  ["musicians","VICTOR UWAIFO","Benin guitarist who sang the original Joromi"],
+  ["musicians","REX LAWSON","Highlife star from the Niger Delta"],
+  ["musicians","SIKIRU AYINDE BARRISTER","Father of fuji music"],
+  ["musicians","WASIU AYINDE","Fuji star known as K1 De Ultimate"],
+  ["musicians","HARUNA ISHOLA","Apala legend"],
+  ["musicians","CHRISTY ESSIEN","Singer known as the Lady of Songs"],
+  ["musicians","SONNY OKOSUNS","Rock star behind Fire in Soweto"],
+  ["musicians","MAJEK FASHEK","Reggae star of Send Down the Rain"],
+  ["musicians","ORLANDO OWOH","Highlife star of the toye sound"],
+  ["musicians","EVI EDNA OGHOLI","Nigeria's queen of reggae"],
+  ["musicians","WANDE COAL","Singer of the album Mushin 2 Mo'Hits"],
+  ["musicians","MI ABAGA","Rapper called Mr Incredible"],
+  ["musicians","ICE PRINCE","Rapper of Oleku"],
+  ["musicians","VECTOR","Rapper called the Viper"],
+  ["musicians","MODENINE","Lyrical rapper famous for wordplay"],
+  ["musicians","RUGGEDMAN","Rapper famous for diss tracks in the 2000s"],
+  ["musicians","ZLATAN","Star of the zanku dance"],
+  ["musicians","NAIRA MARLEY","Singer of Soapy, leader of the Marlians"],
+  ["musicians","PORTABLE","Singer of Zazoo"],
+  ["musicians","OMAH LAY","Singer of Soso"],
+  ["musicians","JOEBOY","Singer of Baby"],
+  ["musicians","BNXN","Singer formerly known as Buju"],
+  ["musicians","RUGER","Singer who wears an eye patch"],
+  ["musicians","VICTONY","Singer of Soweto"],
+  ["musicians","OXLADE","Singer of Ku Lo Sa"],
+  ["musicians","SEYI VIBEZ","Street-pop star from Lagos"],
+  ["musicians","SHALLIPOPI","Benin City rapper called Pluto"],
+  ["musicians","ADEKUNLE GOLD","Singer of Orente"],
+  ["musicians","WAJE","Powerful singer and coach on The Voice Nigeria"],
+  ["musicians","OMAWUMI","Singer who came second on Idols West Africa"],
+  ["musicians","CHIDINMA","Singer of Kedike"],
+  ["musicians","KCEE","Singer of Limpopo"],
+  ["musicians","HARRYSONG","Singer of Reggae Blues"],
+  ["musicians","BANKY W","R and B singer and founder of EME"],
+  ["musicians","SASHA P","First lady of Nigerian hip hop"],
+  ["musicians","MR EAZI","Singer and founder of emPawa"],
+  ["musicians","SPINALL","Top Nigerian DJ"],
+  ["musicians","JIMMY JATT","Veteran Lagos DJ"],
+  ["musicians","DJ CUPPY","DJ and daughter of billionaire Femi Otedola"],
+  ["musicians","PHEELZ","Producer and singer of Finesse"],
+  ["musicians","ODUMODUBLVCK","Rapper of Declan Rice"],
+  ["actors","GENEVIEVE NNAJI","Star and director of Lionheart"],
+  ["actors","RAMSEY NOUAH","Directed and starred in Living in Bondage: Breaking Free"],
+  ["actors","FUNKE AKINDELE","Plays the famous character Jenifa"],
+  ["actors","NKEM OWOH","Comic actor known as Osuofia"],
+  ["actors","PETE EDOCHIE","Veteran who played Okonkwo in Things Fall Apart on TV"],
+  ["actors","OSITA IHEME","Pawpaw from Aki na Ukwa"],
+  ["actors","CHINEDU IKEDIEZE","Aki from Aki na Ukwa"],
+  ["actors","RICHARD MOFE DAMIJO","Veteran actor known as RMD"],
+  ["actors","OMOTOLA","Nollywood queen nicknamed Omosexy"],
+  ["actors","OLU JACOBS","Veteran actor married to Joke Silva"],
+  ["actors","JOKE SILVA","Veteran actress married to Olu Jacobs"],
+  ["actors","RITA DOMINIC","Star of the 2012 romantic film The Meeting"],
+  ["actors","KANAYO O KANAYO","Veteran actor famous for villain roles"],
+  ["actors","JIM IYKE","Bad-boy heartthrob of 2000s Nollywood"],
+  ["actors","CHIWETEL EJIOFOR","British-Nigerian star of 12 Years a Slave"],
+  ["actors","DAVID OYELOWO","Played Martin Luther King Jr in Selma"],
+  ["actors","JOHN BOYEGA","Played Finn in Star Wars"],
+  ["actors","LIVING IN BONDAGE","1992 film that launched Nollywood"],
+  ["actors","THE WEDDING PARTY","Hit 2016 Lagos wedding comedy"],
+  ["actors","KING OF BOYS","Kemi Adetiba's crime saga about Eniola Salami"],
+  ["actors","LIONHEART","Genevieve Nnaji's film bought by Netflix"],
+  ["actors","A TRIBE CALLED JUDAH","Funke Akindele's record-breaking 2023 film"],
+  ["actors","SOLA SOBOWALE","Plays Eniola Salami in King of Boys"],
+  ["actors","ADESUA ETOMI","Plays the bride in The Wedding Party"],
+  ["actors","NONSO DIOBI","Heartthrob of 2000s Nollywood"],
+  ["actors","DESMOND ELLIOT","Actor who became a Lagos lawmaker"],
+  ["actors","MERCY JOHNSON","Actress famous for comic and dramatic roles"],
+  ["actors","PATIENCE OZOKWOR","Actress known as Mama G"],
+  ["actors","NGOZI EZEONU","Veteran actress famous for mother roles"],
+  ["actors","ZACK ORJI","Veteran Nollywood actor"],
+  ["actors","SAM DEDE","Veteran actor and university lecturer"],
+  ["actors","SEGUN ARINZE","Veteran actor nicknamed Black Arrow"],
+  ["actors","BABA SUWE","Yoruba comic actor"],
+  ["actors","MR IBU","Comic actor John Okafor"],
+  ["actors","SAKA","Comic actor famous from telecom adverts"],
+  ["actors","FEMI ADEBAYO","Star of Jagun Jagun"],
+  ["actors","ODUNLADE ADEKOLA","Yoruba film star"],
+  ["actors","TOYIN ABRAHAM","Actress and producer of Yoruba films"],
+  ["actors","KUNLE AFOLAYAN","Director of The Figurine and Anikulapo"],
+  ["actors","ANIKULAPO","Kunle Afolayan's 2022 Netflix epic"],
+  ["actors","THE FIGURINE","Kunle Afolayan's 2009 thriller"],
+  ["actors","JAGUN JAGUN","2023 Yoruba warrior film on Netflix"],
+  ["actors","OCTOBER ONE","Kunle Afolayan's 2014 period thriller"],
+  ["actors","BATTLE ON BUKA STREET","Funke Akindele's 2022 hit about two food sellers"],
+  ["actors","OMO GHETTO","Funke Akindele comedy franchise"],
+  ["actors","CHIEF DADDY","2018 EbonyLife comedy about a rich man's family"],
+  ["actors","MERRY MEN","2018 action comedy about the Real Yoruba Demons"],
+  ["actors","ELEVATOR BABY","2019 film about a man stuck in a lift with a pregnant woman"],
+  ["actors","GANGS OF LAGOS","2023 crime film on Prime Video"],
+  ["actors","BLOOD SISTERS","2022 Netflix thriller series"],
+  ["actors","SHANTY TOWN","2023 Netflix crime series"],
+  ["actors","THE BLACK BOOK","2023 Netflix film starring RMD"],
+  ["actors","OSUOFIA IN LONDON","2003 comedy classic"],
+  ["actors","GLAMOUR GIRLS","1994 classic about Lagos high society ladies"],
+  ["actors","DOMITILLA","1996 film about life on the streets of Lagos"],
+  ["actors","ISOKEN","2017 romantic comedy by Jade Osiberu"],
+  ["actors","AKI NA UKWA","2002 comedy about two mischievous boys"],
+  ["actors","NNEKA THE PRETTY SERPENT","1994 classic about a dangerous beauty"],
+  ["actors","RATTLESNAKE","Amaka Igwe's 1995 crime classic"],
+  ["actors","TUNDE KELANI","Director famous for Saworoide"],
+  ["actors","SAWOROIDE","Tunde Kelani's 1999 political drama"],
+  ["actors","KEMI ADETIBA","Director of King of Boys"],
+  ["actors","MO ABUDU","Founder of EbonyLife"],
+  ["actors","EBONYLIFE","Media company founded by Mo Abudu"],
+  ["actors","AMVCA","Nollywood's biggest awards night"],
+  ["actors","AYO MAKUN","Comedian AY, star of 30 Days in Atlanta"],
+  ["actors","ALI BABA","Godfather of Nigerian stand-up comedy"],
+  ["actors","CHIOMA CHUKWUKA","Award-winning Nollywood actress"],
+  ["actors","UCHE JOMBO","Actress and producer"],
+  ["actors","INI EDO","Star of many 2000s Nollywood films"],
+  ["actors","OC UKEJE","Played Ugwu in Half of a Yellow Sun"],
+  ["actors","STEPHANIE LINUS","Actress and director of Dry"],
+  ["actors","TIMINI EGBUSON","Actor in Elevator Baby"],
+  ["actors","NSE IKPE ETIM","Actress in Fifty and Reloaded"],
+  ["football","SUPER EAGLES","Nigeria's men's national team"],
+  ["football","SUPER FALCONS","Nigeria's women's team, kings of African football"],
+  ["football","GOLDEN EAGLETS","Under-17 team with a record five World Cup titles"],
+  ["football","FLYING EAGLES","Nigeria's under-20 team"],
+  ["football","DREAM TEAM","Squad that won Olympic gold at Atlanta 1996"],
+  ["football","AFCON","Africa Cup of Nations, won by Nigeria in 1980, 1994 and 2013"],
+  ["football","ENYIMBA","Aba club, African champions in 2003 and 2004"],
+  ["football","KANO PILLARS","Northern club whose fans chant Sai Masu Gida"],
+  ["football","RANGERS INTERNATIONAL","Enugu club known as the Flying Antelopes"],
+  ["football","SHOOTING STARS","Ibadan club also called 3SC"],
+  ["football","HEARTLAND","Owerri club once called Iwuanyanwu Nationale"],
+  ["football","NPFL","Nigeria's top professional football league"],
+  ["football","GODSWILL AKPABIO STADIUM","Uyo stadium called the Nest of Champions"],
+  ["football","MOSHOOD ABIOLA STADIUM","The national stadium in Abuja"],
+  ["football","NFF","Body that runs Nigerian football"],
+  ["football","WAFCON","Women's Africa Cup of Nations"],
+  ["football","FALCONETS","Nigeria's under-20 women's team"],
+  ["football","FLAMINGOS","Nigeria's under-17 women's team"],
+  ["football","OLYMPIC EAGLES","Nigeria's under-23 team"],
+  ["football","GREEN EAGLES","Old name of the Super Eagles"],
+  ["football","LOBI STARS","Makurdi club called the Pride of Benue"],
+  ["football","REMO STARS","Ikenne club called the Sky Blue Stars"],
+  ["football","AKWA UNITED","Uyo club called the Promise Keepers"],
+  ["football","PLATEAU UNITED","Jos club that won the 2017 league"],
+  ["football","RIVERS UNITED","Port Harcourt club, 2022 league champions"],
+  ["football","SUNSHINE STARS","Akure club"],
+  ["football","KWARA UNITED","Ilorin club"],
+  ["football","BENDEL INSURANCE","Benin City club"],
+  ["football","KATSINA UNITED","Northern club called the Changi Boys"],
+  ["football","NASARAWA UNITED","Lafia club called the Solid Miners"],
+  ["football","ABIA WARRIORS","Umuahia club"],
+  ["football","DOLPHINS","Port Harcourt club that merged into Rivers United"],
+  ["football","STATIONERY STORES","Old Lagos club called the Flash Flamingoes"],
+  ["football","JULIUS BERGER","Lagos club that won the league in 1991 and 2000"],
+  ["football","BCC LIONS","Gboko club that won the 1990 African Cup Winners' Cup"],
+  ["football","FEDERATION CUP","Nigeria's main knockout cup competition"],
+  ["football","CHALLENGE CUP","Old name of the Federation Cup"],
+  ["football","AITEO CUP","Sponsor's name for the Federation Cup"],
+  ["football","TESLIM BALOGUN STADIUM","Lagos stadium named after a 1950s striker"],
+  ["football","LIBERATION STADIUM","Port Harcourt stadium"],
+  ["football","NNAMDI AZIKIWE STADIUM","Enugu stadium named after Zik"],
+  ["football","SANI ABACHA STADIUM","Kano stadium"],
+  ["football","LEKAN SALAMI STADIUM","Ibadan stadium at Adamasingba"],
+  ["football","UJ ESUENE STADIUM","Calabar stadium"],
+  ["football","TUNISIA","Where Nigeria won AFCON in 1994"],
+  ["football","SOUTH AFRICA","Where Nigeria won AFCON in 2013"],
+  ["football","ATLANTA","City where the Dream Team won Olympic gold"],
+  ["football","USA","Host of Nigeria's first World Cup in 1994"],
+  ["football","ROUND OF SIXTEEN","Furthest stage Nigeria has reached at a World Cup"],
+  ["football","BULGARIA","Team Nigeria beat 3-0 in its first World Cup match"],
+  ["football","SPAIN","Team Nigeria beat 3-2 at the 1998 World Cup"],
+  ["football","ARGENTINA","Team the Dream Team beat in the 1996 Olympic final"],
+  ["football","BRAZIL","Team the Dream Team beat 4-3 in the 1996 Olympic semi-final"],
+  ["football","GHANA","The Black Stars, Nigeria's fiercest rivals"],
+  ["football","CAMEROON","Beat Nigeria on penalties in the 2000 AFCON final in Lagos"],
+  ["football","BURKINA FASO","Team Nigeria beat in the 2013 AFCON final"],
+  ["football","IVORY COAST","Hosts who beat Nigeria in the 2024 AFCON final"],
+  ["football","JOSE PESEIRO","Portuguese coach who led Nigeria at AFCON 2024"],
+  ["football","CLEMENS WESTERHOF","Dutch coach who took Nigeria to the 1994 World Cup"],
+  ["football","JO BONFRERE","Dutch coach of the 1996 Olympic gold team"],
+  ["football","GERNOT ROHR","German coach at the 2018 World Cup"],
+  ["football","SAMSON SIASIA","Coach of the 2008 Olympic silver medal team"],
+  ["football","MANU GARBA","Coach of the 2013 under-17 world champions"],
+  ["football","BEIJING","Where Nigeria won Olympic football silver in 2008"],
+  ["football","MOROCCO","Hosts beaten by the Super Falcons in the 2025 WAFCON final"],
+  ["footballers","JAY JAY OKOCHA","So good they named him twice"],
+  ["footballers","NWANKWO KANU","Papilo, captain of the 1996 Olympic gold team"],
+  ["footballers","RASHIDI YEKINI","Scored Nigeria's first ever World Cup goal"],
+  ["footballers","VICTOR OSIMHEN","2023 African Footballer of the Year"],
+  ["footballers","ADEMOLA LOOKMAN","Hat-trick hero of the 2024 Europa League final"],
+  ["footballers","ASISAT OSHOALA","Record six-time African Women's Footballer of the Year"],
+  ["footballers","MIKEL OBI","Won the Champions League with Chelsea in 2012"],
+  ["footballers","VINCENT ENYEAMA","Super Eagles goalkeeping legend"],
+  ["footballers","STEPHEN KESHI","Big Boss, won AFCON as a player and as a coach"],
+  ["footballers","SEGUN ODEGBAMI","Winger nicknamed Mathematical"],
+  ["footballers","SUNDAY OLISEH","Scored the famous long-range goal against Spain in 1998"],
+  ["footballers","DANIEL AMOKACHI","Striker nicknamed The Bull"],
+  ["footballers","FINIDI GEORGE","Won the Champions League with Ajax in 1995"],
+  ["footballers","AHMED MUSA","Scored twice against Argentina at the 2014 World Cup"],
+  ["footballers","WILFRED NDIDI","Leicester midfielder who won the FA Cup in 2021"],
+  ["footballers","ALEX IWOBI","Midfielder whose uncle is Jay Jay Okocha"],
+  ["footballers","TARIBO WEST","Defender famous for his colourful braids"],
+  ["footballers","PERPETUA NKWOCHA","Super Falcons legend, four-time African player of the year"],
+  ["footballers","KELECHI IHEANACHO","Striker who came through Manchester City"],
+  ["footballers","EMMANUEL AMUNEKE","Scored the winner in the 1996 Olympic final"],
+  ["footballers","CELESTINE BABAYARO","Left-back famous for his backflip celebration"],
+  ["footballers","VICTOR IKPEBA","Striker nicknamed the Prince of Monaco"],
+  ["footballers","TIJANI BABANGIDA","Ajax winger of the 1990s"],
+  ["footballers","UCHE OKECHUKWU","Fenerbahce defender of the 1990s"],
+  ["footballers","AUGUSTINE EGUAVOEN","Defender who later coached the Super Eagles"],
+  ["footballers","PETER RUFAI","Goalkeeper at the 1994 World Cup, called Dodo Mayana"],
+  ["footballers","BEN IROHA","Left-back at the 1994 World Cup"],
+  ["footballers","EMMANUEL EMENIKE","Joint top scorer at AFCON 2013"],
+  ["footballers","VICTOR MOSES","Chelsea wing-back who won the 2017 Premier League"],
+  ["footballers","OBAFEMI MARTINS","Speedy striker famous for his backflips at Inter Milan"],
+  ["footballers","YAKUBU AIYEGBENI","Striker called the Yak at Portsmouth and Everton"],
+  ["footballers","JOSEPH YOBO","Everton defender and Super Eagles captain"],
+  ["footballers","PETER ODEMWINGIE","Striker who starred for West Brom"],
+  ["footballers","JOHN UTAKA","Portsmouth winger of the late 2000s"],
+  ["footballers","ODION IGHALO","Top scorer at AFCON 2019"],
+  ["footballers","SAMUEL CHUKWUEZE","Winger who joined AC Milan in 2023"],
+  ["footballers","CALVIN BASSEY","Defender who moved from Ajax to Fulham"],
+  ["footballers","WILLIAM TROOST-EKONG","Captain named best player of AFCON 2024"],
+  ["footballers","STANLEY NWABALI","Hero goalkeeper of AFCON 2024"],
+  ["footballers","FRANK ONYEKA","Brentford midfielder"],
+  ["footballers","RAPHAEL ONYEDIKA","Club Brugge midfielder"],
+  ["footballers","MOSES SIMON","Winger at Nantes"],
+  ["footballers","VICTOR BONIFACE","Striker who won the 2024 Bundesliga with Leverkusen"],
+  ["footballers","OLA AINA","Nottingham Forest full-back"],
+  ["footballers","KENNETH OMERUO","Centre-back who played at Leganes"],
+  ["footballers","CHRISTIAN CHUKWU","Captain of the 1980 AFCON winners"],
+  ["footballers","MUDA LAWAL","Midfield star of the 1980 AFCON winners"],
+  ["footballers","THOMPSON OLIHA","Midfielder at the 1994 World Cup"],
+  ["footballers","MUTIU ADEPOJU","Midfielder nicknamed the Headmaster"],
+  ["footballers","GARBA LAWAL","1990s winger who played for Roda JC"],
+  ["footballers","JULIUS AGHAHOWA","Striker famous for his somersault celebrations"],
+  ["footballers","NDUKA UGBADE","Captain of the 1985 under-16 world champions"],
+  ["footballers","SUNDAY MBA","Scored the winning goal in the 2013 AFCON final"],
+  ["footballers","OGENYI ONAZI","Midfielder who played for Lazio"],
+  ["footballers","CARL IKEME","Wolves goalkeeper who beat leukaemia"],
+  ["footballers","FRANCIS UZOHO","Goalkeeper at the 2018 World Cup"],
+  ["footballers","MERCY AKIDE","Super Falcons striker of the late 1990s"],
+  ["footballers","DESIRE OPARANOZIE","Long-serving Super Falcons midfielder"],
+  ["footballers","RASHEEDAT AJIBADE","Super Falcons forward and captain"],
+  ["footballers","CHIAMAKA NNADOZIE","Super Falcons goalkeeper"],
+  ["footballers","ONOME EBI","Defender who played at six Women's World Cups"],
+  ["footballers","MICHELLE ALOZIE","Super Falcons defender"],
+  ["footballers","SEYI OLOFINJANA","Midfielder who played for Wolves and Hull"],
+  ["footballers","JONATHAN AKPOBORIE","Striker who starred for Stuttgart"],
+  ["footballers","EFE AMBROSE","Defender who played for Celtic"],
+  ["footballers","ELDERSON ECHIEJILE","Left-back who won AFCON 2013"],
+  ["footballers","BRIGHT OSAYI-SAMUEL","Fenerbahce winger"],
+  ["footballers","NATHAN TELLA","Forward who won the 2024 Bundesliga with Leverkusen"],
+  ["footballers","KELECHI NWAKALI","Captain of the 2015 under-17 world champions"],
+  ["history","NNAMDI AZIKIWE","Zik, Nigeria's first President"],
+  ["history","OBAFEMI AWOLOWO","Awo, first Premier of the Western Region"],
+  ["history","AHMADU BELLO","Sardauna of Sokoto, Premier of the North"],
+  ["history","TAFAWA BALEWA","Nigeria's first and only Prime Minister"],
+  ["history","HERBERT MACAULAY","Father of Nigerian nationalism"],
+  ["history","FUNMILAYO RANSOME-KUTI","Women's rights leader and Fela's mother"],
+  ["history","MARGARET EKPO","Women's rights activist from Calabar"],
+  ["history","QUEEN AMINA","Warrior queen of Zazzau"],
+  ["history","MOREMI","Ife heroine who saved her people"],
+  ["history","EMOTAN","Benin market woman honoured with a statue"],
+  ["history","QUEEN IDIA","Benin queen mother whose ivory mask is famous"],
+  ["history","JAJA OF OPOBO","King who founded Opobo and defied the British"],
+  ["history","NANA OLOMU","Itsekiri merchant prince"],
+  ["history","OVONRAMWEN","Benin king exiled by the British in 1897"],
+  ["history","USMAN DAN FODIO","Founder of the Sokoto Caliphate"],
+  ["history","ODUDUWA","Ancestral father of the Yoruba"],
+  ["history","INDEPENDENCE DAY","October 1, 1960"],
+  ["history","NINETEEN SIXTY","Year Nigeria became independent"],
+  ["history","AMALGAMATION","The 1914 joining of North and South"],
+  ["history","LORD LUGARD","Governor-General who joined North and South"],
+  ["history","FLORA SHAW","Journalist who gave Nigeria its name"],
+  ["history","REPUBLIC","What Nigeria became in 1963"],
+  ["history","BIAFRA","Breakaway republic of 1967 to 1970"],
+  ["history","CIVIL WAR","Conflict that lasted from 1967 to 1970"],
+  ["history","ODUMEGWU OJUKWU","Leader of Biafra"],
+  ["history","YAKUBU GOWON","Head of state during the civil war"],
+  ["history","MURTALA MUHAMMED","Head of state on the twenty naira note"],
+  ["history","OLUSEGUN OBASANJO","Military ruler who handed over to civilians, later president"],
+  ["history","JUNE TWELVE","Democracy Day"],
+  ["history","MKO ABIOLA","Winner of the annulled 1993 election"],
+  ["history","KUDIRAT ABIOLA","Pro-democracy activist killed in 1996"],
+  ["history","KEN SARO-WIWA","Ogoni activist and writer executed in 1995"],
+  ["history","GANI FAWEHINMI","Fearless human rights lawyer"],
+  ["history","DORA AKUNYILI","Agency boss who fought fake drugs"],
+  ["history","NAFDAC","Agency that fights fake food and drugs"],
+  ["history","ABA WOMEN'S RIOT","1929 protest against colonial taxes"],
+  ["history","NOK CULTURE","Ancient civilisation famous for terracotta heads"],
+  ["history","IGBO UKWU","Site of famous ninth-century bronzes"],
+  ["history","BENIN BRONZES","Artworks taken by British soldiers in 1897"],
+  ["history","OYO EMPIRE","Powerful Yoruba state of the past"],
+  ["history","KANEM BORNU","Ancient empire around Lake Chad"],
+  ["history","SOKOTO CALIPHATE","Islamic state founded in the early 1800s"],
+  ["history","LAGOS COLONY","What Lagos became when Britain annexed it in 1861"],
+  ["history","END SARS","2020 youth protests against police brutality"],
+  ["history","NAIRA","Nigeria's currency since 1973"],
+  ["history","POUND","Currency Nigeria used before the naira"],
+  ["history","GREEN WHITE GREEN","Colours of the flag"],
+  ["history","TAIWO AKINKUNMI","Designer of the Nigerian flag"],
+  ["history","ARISE O COMPATRIOTS","National anthem from 1978 to 2024"],
+  ["history","NIGERIA WE HAIL THEE","Anthem brought back in 2024"],
+  ["history","UNITY AND FAITH","Opening words of the national motto"],
+  ["history","THIRTY SIX","Number of states in Nigeria"],
+  ["history","AGUIYI IRONSI","Nigeria's first military head of state"],
+  ["books","CHINUA ACHEBE","Author of Things Fall Apart"],
+  ["books","WOLE SOYINKA","First African to win the Nobel Prize for Literature"],
+  ["books","CHIMAMANDA ADICHIE","Author of Americanah"],
+  ["books","THINGS FALL APART","Achebe's 1958 novel about Okonkwo"],
+  ["books","ARROW OF GOD","Achebe novel about the priest Ezeulu"],
+  ["books","NO LONGER AT EASE","Achebe novel about Okonkwo's grandson Obi"],
+  ["books","ANTHILLS OF THE SAVANNAH","Achebe's 1987 novel"],
+  ["books","THERE WAS A COUNTRY","Achebe's civil war memoir"],
+  ["books","HALF OF A YELLOW SUN","Adichie's novel set during the Biafran war"],
+  ["books","PURPLE HIBISCUS","Adichie's debut novel, narrated by Kambili"],
+  ["books","AMERICANAH","Adichie novel about Ifemelu and Obinze"],
+  ["books","WE SHOULD ALL BE FEMINISTS","Adichie's famous essay"],
+  ["books","DEATH AND THE KING'S HORSEMAN","Soyinka play about a Yoruba ritual"],
+  ["books","THE LION AND THE JEWEL","Soyinka comedy about Sidi and Baroka"],
+  ["books","AKE","Soyinka's childhood memoir"],
+  ["books","BEN OKRI","Booker Prize winner for The Famished Road"],
+  ["books","THE FAMISHED ROAD","1991 Booker winner about a spirit child"],
+  ["books","BUCHI EMECHETA","Author of The Joys of Motherhood"],
+  ["books","THE JOYS OF MOTHERHOOD","Buchi Emecheta novel about Nnu Ego"],
+  ["books","FLORA NWAPA","Pioneering woman novelist who wrote Efuru"],
+  ["books","EFURU","Flora Nwapa's 1966 novel"],
+  ["books","CYPRIAN EKWENSI","Author of Jagua Nana"],
+  ["books","JAGUA NANA","Ekwensi novel about a glamorous Lagos woman"],
+  ["books","AMOS TUTUOLA","Author of The Palm-Wine Drinkard"],
+  ["books","THE PALM-WINE DRINKARD","Tutuola's 1952 folktale novel"],
+  ["books","CHRISTOPHER OKIGBO","Poet killed in the civil war"],
+  ["books","ELECHI AMADI","Author of The Concubine"],
+  ["books","THE CONCUBINE","Elechi Amadi's novel about Ihuoma"],
+  ["books","OLA ROTIMI","Playwright of The Gods Are Not to Blame"],
+  ["books","THE GODS ARE NOT TO BLAME","Ola Rotimi's Yoruba retelling of Oedipus"],
+  ["books","JP CLARK","Poet and playwright John Pepper Clark"],
+  ["books","FEMI OSOFISAN","Playwright of Morountodun"],
+  ["books","SOZABOY","Ken Saro-Wiwa's novel written in rotten English"],
+  ["books","CHIGOZIE OBIOMA","Booker-shortlisted author of The Fishermen"],
+  ["books","THE FISHERMEN","Chigozie Obioma's novel about four brothers"],
+  ["books","OYINKAN BRAITHWAITE","Author of My Sister, the Serial Killer"],
+  ["books","MY SISTER THE SERIAL KILLER","Thriller about Korede and Ayoola"],
+  ["books","SEFI ATTA","Author of Everything Good Will Come"],
+  ["books","NNEDI OKORAFOR","Author of Binti"],
+  ["books","TOMI ADEYEMI","Author of Children of Blood and Bone"],
+  ["books","CHILDREN OF BLOOD AND BONE","Fantasy novel set in the land of Orisha"],
+  ["books","AKWAEKE EMEZI","Author of Freshwater"],
+  ["books","AYOBAMI ADEBAYO","Author of Stay With Me"],
+  ["books","HELON HABILA","Author of Waiting for an Angel"],
+  ["books","TEJU COLE","Author of Open City"],
+  ["books","ZAYNAB ALKALI","Northern novelist who wrote The Stillborn"],
+  ["books","PACESETTERS","Popular series of novels for young readers"],
+  ["books","AFRICAN WRITERS SERIES","Book series Achebe edited for Heinemann"],
+  ["books","CHIKA UNIGWE","Author of On Black Sisters' Street"],
+  ["books","NOBEL PRIZE","Award Soyinka won in 1986"],
+  ["languages","E KAABO","Welcome, in Yoruba"],
+  ["languages","E SE","Thank you, in Yoruba"],
+  ["languages","BAWO NI","How are you?, in Yoruba"],
+  ["languages","E KAARO","Good morning, in Yoruba"],
+  ["languages","O DABO","Goodbye, in Yoruba"],
+  ["languages","OMI","Water, in Yoruba"],
+  ["languages","ILE","House or home, in Yoruba"],
+  ["languages","OUNJE","Food, in Yoruba"],
+  ["languages","OWO","Money, in Yoruba"],
+  ["languages","IYA","Mother, in Yoruba"],
+  ["languages","BABA","Father, in Yoruba"],
+  ["languages","EGBON","Older sibling, in Yoruba"],
+  ["languages","ABURO","Younger sibling, in Yoruba"],
+  ["languages","ORE","Friend, in Yoruba"],
+  ["languages","OKO","Husband, in Yoruba"],
+  ["languages","NNOO","Welcome, in Igbo"],
+  ["languages","DAALU","Thank you, in Igbo"],
+  ["languages","KEDU","How are you?, in Igbo"],
+  ["languages","NNE","Mother, in Igbo"],
+  ["languages","NNA","Father, in Igbo"],
+  ["languages","MMIRI","Water, in Igbo"],
+  ["languages","NRI","Food, in Igbo"],
+  ["languages","EGO","Money, in Igbo"],
+  ["languages","ULO","House, in Igbo"],
+  ["languages","ENYI","Friend, in Igbo"],
+  ["languages","CHUKWU","God, in Igbo"],
+  ["languages","NWANNE","Sibling or relative, in Igbo"],
+  ["languages","ISI","Head, in Igbo"],
+  ["languages","UMU","Children, in Igbo"],
+  ["languages","SANNU","Hello, in Hausa"],
+  ["languages","NAGODE","Thank you, in Hausa"],
+  ["languages","INA KWANA","Good morning, in Hausa"],
+  ["languages","SAI ANJIMA","See you later, in Hausa"],
+  ["languages","RUWA","Water, in Hausa"],
+  ["languages","ABINCI","Food, in Hausa"],
+  ["languages","KUDI","Money, in Hausa"],
+  ["languages","GIDA","House, in Hausa"],
+  ["languages","ABOKI","Friend, in Hausa"],
+  ["languages","UWA","Mother, in Hausa"],
+  ["languages","YARO","Boy, in Hausa"],
+  ["languages","YARINYA","Girl, in Hausa"],
+  ["languages","MAI GADI","Security guard, in Hausa"],
+  ["languages","LAFIYA","Good health, in Hausa"],
+  ["languages","KOYO","Hello, in Edo"],
+  ["languages","YORUBA","Main language of the south-west"],
+  ["languages","IGBO","Main language of the south-east"],
+  ["languages","HAUSA","Most widely spoken language in the north"],
+  ["languages","FULFULDE","Language of the Fulani"],
+  ["languages","KANURI","Main language of Borno"],
+  ["languages","TIV","Language of Benue's largest ethnic group"],
+  ["languages","IBIBIO","Main language of Akwa Ibom"],
+  ["languages","IJAW","Language family of the Niger Delta"],
+  ["languages","EFIK","Language of Calabar"],
+  ["languages","URHOBO","Language of a large Delta State people"],
+  ["languages","NUPE","Language spoken around Bida in Niger State"],
+  ["festivals","ARGUNGU","Kebbi festival where fishermen catch fish by hand"],
+  ["festivals","OSUN OSOGBO","Festival for the river goddess Osun"],
+  ["festivals","EYO FESTIVAL","Lagos festival with masquerades dressed in white"],
+  ["festivals","DURBAR","Horse parade held during Sallah in the North"],
+  ["festivals","NEW YAM FESTIVAL","Igbo harvest celebration"],
+  ["festivals","IRI JI","Igbo name for the New Yam Festival"],
+  ["festivals","OFALA","Royal festival of the Obi of Onitsha"],
+  ["festivals","CALABAR CARNIVAL","Big street party held every December"],
+  ["festivals","OJUDE OBA","Ijebu-Ode festival of horses and fine clothes"],
+  ["festivals","EGUNGUN","Yoruba masquerade honouring ancestors"],
+  ["festivals","MMANWU","Igbo masquerade festival"],
+  ["festivals","GELEDE","Yoruba masks honouring mothers"],
+  ["festivals","OLOJO","Ile-Ife festival where the Ooni wears the Are crown"],
+  ["festivals","IGUE","Benin royal festival held in December"],
+  ["festivals","EKPE","Leopard society masquerade of the Efik"],
+  ["festivals","EKPO","Ibibio ancestral masquerade"],
+  ["festivals","LEBOKU","New yam festival of Ugep"],
+  ["festivals","PATEGI REGATTA","Boat festival in Kwara State"],
+  ["festivals","IKEJI","Masquerade festival of Arondizuogu"],
+  ["festivals","SALLAH","Eid celebration"],
+  ["festivals","RAMADAN","Month of fasting"],
+  ["festivals","ILEYA","Yoruba name for Eid al-Adha, the ram festival"],
+  ["festivals","DETTY DECEMBER","Season of nonstop parties when the diaspora comes home"],
+  ["festivals","SANGO FESTIVAL","Oyo festival for the god of thunder"],
+  ["festivals","OKE IBADAN","Ibadan festival honouring its hill"],
+  ["festivals","OMUGWO","Igbo tradition of a grandmother caring for a new mother"],
+  ["festivals","ORIKI","Yoruba praise poetry"],
+  ["festivals","ISOMOLORUKO","Yoruba naming ceremony"],
+  ["festivals","DAMBE","Hausa traditional boxing"],
+  ["festivals","KOKAWA","Hausa traditional wrestling"],
+  ["festivals","ATILOGWU","Acrobatic Igbo dance"],
+  ["festivals","BATA","Yoruba drum and dance"],
+  ["festivals","SWANGE","Tiv dance"],
+  ["festivals","EKOMBI","Efik dance"],
+  ["festivals","OGENE","Igbo metal gong"],
+  ["festivals","FACIAL MARKS","Tribal marks on the face"],
+  ["festivals","LALLE","Henna designs at Hausa weddings"],
+  ["festivals","CHIEFTAINCY TITLE","Honour given by a king"],
+  ["festivals","OZO TITLE","Prestigious Igbo title"],
+  ["festivals","IFA","Yoruba system of divination"],
+  ["festivals","MASQUERADE","Costumed spirit dancer"],
+  ["festivals","DUNDUN","Hourglass-shaped talking drum"],
+  ["festivals","IWA AKWA","Igbo coming-of-age ceremony for young men"],
+  ["festivals","MOONLIGHT TALES","Folk stories told under the moon"],
+  ["festivals","TORTOISE","Trickster hero of many folk tales"],
+  ["festivals","IJAPA","Yoruba name for the trickster tortoise"],
+  ["festivals","MAMI WATA","Water spirit of West African legend"],
+  ["festivals","BURIAL CEREMONY","Big send-off with music and aso ebi"],
+  ["festivals","INTRODUCTION","First formal meeting of two families before a wedding"],
+  ["festivals","DOBALE","Yoruba greeting where men lie flat before elders"]
+];
+const MAX = 6, ROUNDS = 5;
+const RIGHT = ["Nice one!", "Well done!", "Correct!", "Great guess!", "You're on fire!", "Keep going!"];
+const WRONG = ["Oh no!", "Not quite!", "Try again!", "Careful now!", "That's not it!", "The pot is getting hot!"];
+const $ = id => document.getElementById(id);
+const pick = a => a[Math.floor(Math.random() * a.length)];
+
+let best = 0;
+try { best = +localStorage.getItem("jollof-best") || 0; } catch (e) {}
+let S;
+
+// Puzzles already shown, kept across games so nothing repeats until a category is used up
+let seen = new Set();
+try { seen = new Set(JSON.parse(localStorage.getItem("jollof-seen") || "[]")); } catch (e) {}
+const saveSeen = () => { try { localStorage.setItem("jollof-seen", JSON.stringify([...seen])); } catch (e) {} };
+const poolFor = cat => PUZZLES.map((p, i) => i).filter(i => cat === "all" || PUZZLES[i][0] === cat);
+
+const VOICE_OK = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+let voiceOn = true, voice = null;
+try { voiceOn = localStorage.getItem("jollof-voice") !== "off"; } catch (e) {}
+const TONE = { good: [1.05, 1.25], bad: [0.85, 0.75], big: [0.95, 1] };
+function pickVoice() {
+  const vs = speechSynthesis.getVoices().filter(v => /^en/i.test(v.lang));
+  const by = re => vs.find(v => re.test(v.lang) || re.test(v.name));
+  voice = by(/en[-_]NG|Nigeria/i) || by(/en[-_](GH|KE|ZA)|Ghana|Kenya|South Africa/i) || by(/en[-_]GB/i) || vs[0] || null;
+  const vb = document.getElementById("voice");
+  if (vb) vb.title = voice ? "Voice: " + voice.name : "";
+}
+if (VOICE_OK) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+function say(text, mood) {
+  if (!VOICE_OK || !voiceOn) return;
+  try {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    if (voice) { u.voice = voice; u.lang = voice.lang; } else u.lang = "en-NG";
+    [u.rate, u.pitch] = TONE[mood] || [1, 1];
+    speechSynthesis.speak(u);
+  } catch (e) {}
+}
+
+function newParty(cat) {
+  S = { cat: cat || (S && S.cat) || "all", round: 0, score: 0, streak: 0, history: [] };
+  $("overlay").hidden = true;
+  nextPot();
+}
+function nextPot() {
+  const pool = poolFor(S.cat);
+  let fresh = pool.filter(i => !seen.has(PUZZLES[i][1]));
+  const cycled = !fresh.length;
+  if (cycled) { pool.forEach(i => seen.delete(PUZZLES[i][1])); fresh = pool; }
+  const idx = pick(fresh);
+  seen.add(PUZZLES[idx][1]);
+  saveSeen();
+  S.round++;
+  S.idx = idx; S.guessed = []; S.misses = 0; S.status = "playing"; S.fresh = [];
+  S.msg = cycled ? ["Fresh start!", "You've played every puzzle here, so they're back in the pot", "big"] : ["", ""];
+  render();
+}
+const answer = () => PUZZLES[S.idx][1];
+const letters = () => [...new Set(answer().replace(/[^A-Z]/g, ""))];
+const solved = () => letters().every(l => S.guessed.includes(l));
+const mult = () => 1 + Math.min(S.streak, 4) * 0.5;
+
+function guess(l) {
+  if (S.status !== "playing" || S.guessed.includes(l)) return;
+  S.guessed.push(l);
+  const n = answer().split(l).length - 1;
+  if (n) {
+    S.score += 10 * n;
+    S.fresh = [l];
+    S.msg = [pick(RIGHT), n > 1 ? n + " " + l + "s, +" + 10 * n : "+10", "good"];
+    say(S.msg[0], "good");
+    if (solved()) return win();
+  } else {
+    S.misses++;
+    S.fresh = [];
+    S.msg = [pick(WRONG), "There's no " + l + " in this one", "bad"];
+    say(S.msg[0], "bad");
+    shake();
+    if (S.misses >= MAX) return lose();
+  }
+  render();
+}
+function askMama() {
+  if (S.status !== "playing" || S.misses >= MAX - 1) return;
+  const left = letters().filter(l => !S.guessed.includes(l));
+  if (!left.length) return;
+  const l = pick(left);
+  S.guessed.push(l);
+  S.misses++;
+  S.fresh = [l];
+  S.msg = ["Mama Put says: " + l, "The fire went up a little", "big"];
+  say("Mama Put says, try the letter " + l + ". The fire went up a little.", "big");
+  if (solved()) return win();
+  render();
+}
+function win() {
+  const bonus = Math.round((50 + 20 * (MAX - S.misses)) * mult());
+  S.score += bonus;
+  S.streak++;
+  S.status = "won";
+  S.history.push([answer(), true]);
+  say("The jollof is ready!", "good");
+  S.msg = ["The jollof is ready!", "Bonus +" + bonus + (mult() > 1 ? " (streak x" + mult() + ")" : ""), "good"];
+  render();
+}
+function lose() {
+  S.streak = 0;
+  S.status = "lost";
+  S.history.push([answer(), false]);
+  say("Oh no, the pot burnt! The answer was " + answer() + ".", "bad");
+  S.msg = ["The pot burnt!", "The answer was " + answer(), "bad"];
+  render();
+}
+function proceed() {
+  if (S.round >= ROUNDS) return finish();
+  nextPot();
+}
+function finish() {
+  S.status = "over";
+  const isBest = S.score > best;
+  if (isBest) { best = S.score; try { localStorage.setItem("jollof-best", best); } catch (e) {} }
+  const ok = S.history.filter(h => h[1]).length;
+  $("ovTitle").textContent = ok === ROUNDS ? "Master chef! Not one pot burnt." : ok >= 3 ? "Party over. Nice cooking!" : "Oh dear, the guests are still hungry!";
+  $("ovScore").textContent = S.score;
+  say($("ovTitle").textContent, "big");
+  $("ovNote").textContent = (isBest ? "New best score! " : "Best: " + best + ". ") + ok + " of " + ROUNDS + " pots served.";
+  $("ovList").innerHTML = S.history.map(h => `<li><span>${h[0]}</span><span class="${h[1] ? "r-ok" : "r-no"}">${h[1] ? "Served" : "Burnt"}</span></li>`).join("");
+  $("overlay").hidden = false;
+  render();
+  $("again").focus();
+}
+function shake() {
+  const b = $("board");
+  b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake");
+}
+
+function render() {
+  const p = PUZZLES[S.idx];
+  $("score").textContent = S.score;
+  $("round").textContent = S.round + "/" + ROUNDS;
+  $("streak").textContent = "x" + mult();
+  $("best").textContent = Math.max(best, S.score);
+  const pool = poolFor(S.cat), left = pool.filter(i => !seen.has(PUZZLES[i][1])).length;
+  $("left").textContent = left + " of " + pool.length + " " + (S.cat === "all" ? "" : CATS[S.cat] + " ") + "puzzles not played yet";
+  $("cat").textContent = CATS[p[0]];
+  $("clue").textContent = p[2];
+
+  const over = S.status !== "playing";
+  $("board").style.setProperty("--n", Math.max(6, ...p[1].split(" ").map(w => w.length)));
+  $("board").innerHTML = p[1].split(" ").map(w => `<div class="word">${[...w].map(c => {
+    if (!/[A-Z]/.test(c)) return `<div class="tile punct">${c}</div>`;
+    const has = S.guessed.includes(c);
+    if (has) return `<div class="tile${S.fresh.includes(c) ? " show" : ""}">${c}</div>`;
+    return over ? `<div class="tile missed show">${c}</div>` : `<div class="tile" aria-label="blank"></div>`;
+  }).join("")}</div>`).join("");
+
+  const [m, sub, cls] = S.msg;
+  $("msg").className = "msg " + (cls || "");
+  $("msg").innerHTML = m ? `${m}<small>${sub}</small>` : `<small>Pick a letter to start cooking</small>`;
+
+  document.querySelectorAll(".key").forEach(k => {
+    const l = k.dataset.l, g = S.guessed.includes(l);
+    k.className = "key" + (g ? (answer().includes(l) ? " hit" : " miss") : "");
+    k.disabled = g || over;
+  });
+
+  $("pips").innerHTML = Array.from({ length: MAX }, (_, i) => `<span class="pip${i < S.misses ? " on" : ""}"></span>`).join("");
+  $("mama").disabled = over || S.misses >= MAX - 1;
+
+  const pot = $("pot");
+  pot.classList.toggle("won", S.status === "won");
+  pot.classList.toggle("lost", S.status === "lost");
+  $("fire").style.transform = `scale(${S.status === "won" ? 0.25 : 0.3 + S.misses * 0.12})`;
+  $("glow").setAttribute("opacity", (S.misses / MAX * 0.8).toFixed(2));
+  $("potbody").setAttribute("fill", S.status === "lost" ? "#1a1a20" : "#33343f");
+  $("food").setAttribute("fill", S.status === "lost" ? "#1b1410" : "#e4532b");
+  const smoke = [...$("smoke").children];
+  smoke.forEach((c, i) => {
+    const on = S.status === "lost" ? 1 : S.misses >= 3 + i ? 0.35 + 0.2 * (S.misses - 3) : 0;
+    c.setAttribute("opacity", Math.min(on, 0.95));
+    c.setAttribute("fill", S.status === "lost" ? ["#262630", "#1d1d26", "#16161d"][i] : ["#7c8099", "#6a6e88", "#5a5e78"][i]);
+  });
+  pot.setAttribute("aria-label", S.status === "lost" ? "The pot has burnt" : S.status === "won" ? "Steaming pot of jollof, ready to serve" : `Pot on the fire, heat ${S.misses} of ${MAX}`);
+
+  const nx = $("next");
+  nx.hidden = !(S.status === "won" || S.status === "lost");
+  nx.textContent = S.round >= ROUNDS ? "See party results" : "Next pot";
+
+  document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c.dataset.c === S.cat));
+}
+
+function build() {
+  const rows = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
+  $("keys").innerHTML = rows.map(r => `<div class="row">${[...r].map(l => `<button class="key" type="button" data-l="${l}" aria-label="Letter ${l}">${l}</button>`).join("")}</div>`).join("");
+  $("keys").addEventListener("click", e => { const k = e.target.closest(".key"); if (k) guess(k.dataset.l); });
+  $("chips").insertAdjacentHTML("beforeend", Object.entries(CATS).map(([k, v]) => `<button class="chip" type="button" data-c="${k}" aria-pressed="false">${v}</button>`).join(""));
+  $("chips").addEventListener("click", e => { const c = e.target.closest(".chip"); if (c) newParty(c.dataset.c); });
+  $("mama").addEventListener("click", askMama);
+  const vb = $("voice");
+  vb.hidden = !VOICE_OK;
+  const setVb = () => { vb.setAttribute("aria-pressed", voiceOn); vb.querySelector("b").textContent = voiceOn ? "On" : "Off"; };
+  setVb();
+  vb.addEventListener("click", () => {
+    voiceOn = !voiceOn;
+    try { localStorage.setItem("jollof-voice", voiceOn ? "on" : "off"); } catch (e) {}
+    if (voiceOn) say("Let's cook!", "good"); else speechSynthesis.cancel();
+    setVb();
+  });
+  $("next").addEventListener("click", proceed);
+  $("again").addEventListener("click", () => newParty());
+  document.addEventListener("keydown", e => {
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if (S.status === "over") return;
+    if (e.key === "Enter" && !$("next").hidden) { e.preventDefault(); return proceed(); }
+    const l = e.key.toUpperCase();
+    if (/^[A-Z]$/.test(l)) guess(l);
+  });
+}
+
+function start(data) {
+  build();
+  if (data && data.S && PUZZLES[data.S.idx]) {
+    S = data.S;
+    render();
+    if (S.status === "over") finish();
+  } else newParty("all");
+}
+window.claude?.hot?.snapshot?.(() => ({ S }));
+window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
+</script>

@@ -1,0 +1,51 @@
+NFF|Body that runs Nigerian football
+WAFCON|Women's Africa Cup of Nations
+FALCONETS|Nigeria's under-20 women's team
+FLAMINGOS|Nigeria's under-17 women's team
+OLYMPIC EAGLES|Nigeria's under-23 team
+GREEN EAGLES|Old name of the Super Eagles
+LOBI STARS|Makurdi club called the Pride of Benue
+REMO STARS|Ikenne club called the Sky Blue Stars
+AKWA UNITED|Uyo club called the Promise Keepers
+PLATEAU UNITED|Jos club that won the 2017 league
+RIVERS UNITED|Port Harcourt club, 2022 league champions
+SUNSHINE STARS|Akure club
+KWARA UNITED|Ilorin club
+BENDEL INSURANCE|Benin City club
+KATSINA UNITED|Northern club called the Changi Boys
+NASARAWA UNITED|Lafia club called the Solid Miners
+ABIA WARRIORS|Umuahia club
+DOLPHINS|Port Harcourt club that merged into Rivers United
+STATIONERY STORES|Old Lagos club called the Flash Flamingoes
+JULIUS BERGER|Lagos club that won the league in 1991 and 2000
+BCC LIONS|Gboko club that won the 1990 African Cup Winners' Cup
+FEDERATION CUP|Nigeria's main knockout cup competition
+CHALLENGE CUP|Old name of the Federation Cup
+AITEO CUP|Sponsor's name for the Federation Cup
+TESLIM BALOGUN STADIUM|Lagos stadium named after a 1950s striker
+LIBERATION STADIUM|Port Harcourt stadium
+NNAMDI AZIKIWE STADIUM|Enugu stadium named after Zik
+SANI ABACHA STADIUM|Kano stadium
+LEKAN SALAMI STADIUM|Ibadan stadium at Adamasingba
+UJ ESUENE STADIUM|Calabar stadium
+TUNISIA|Where Nigeria won AFCON in 1994
+SOUTH AFRICA|Where Nigeria won AFCON in 2013
+ATLANTA|City where the Dream Team won Olympic gold
+USA|Host of Nigeria's first World Cup in 1994
+ROUND OF SIXTEEN|Furthest stage Nigeria has reached at a World Cup
+BULGARIA|Team Nigeria beat 3-0 in its first World Cup match
+SPAIN|Team Nigeria beat 3-2 at the 1998 World Cup
+ARGENTINA|Team the Dream Team beat in the 1996 Olympic final
+BRAZIL|Team the Dream Team beat 4-3 in the 1996 Olympic semi-final
+GHANA|The Black Stars, Nigeria's fiercest rivals
+CAMEROON|Beat Nigeria on penalties in the 2000 AFCON final in Lagos
+BURKINA FASO|Team Nigeria beat in the 2013 AFCON final
+IVORY COAST|Hosts who beat Nigeria in the 2024 AFCON final
+JOSE PESEIRO|Portuguese coach who led Nigeria at AFCON 2024
+CLEMENS WESTERHOF|Dutch coach who took Nigeria to the 1994 World Cup
+JO BONFRERE|Dutch coach of the 1996 Olympic gold team
+GERNOT ROHR|German coach at the 2018 World Cup
+SAMSON SIASIA|Coach of the 2008 Olympic silver medal team
+MANU GARBA|Coach of the 2013 under-17 world champions
+BEIJING|Where Nigeria won Olympic football silver in 2008
+MOROCCO|Hosts beaten by the Super Falcons in the 2025 WAFCON final
